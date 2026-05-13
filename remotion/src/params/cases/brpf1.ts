@@ -15,7 +15,7 @@ export const CASE_BRPF1: VUSVideoParams = {
   gene: {
     functionDescription:
       "מקודד חלבון שמווסת את פעילות גנים אחרים בתא",
-    functionAnalogy: "מנהל תפעול שמחליט אילו הוראות בגנום מופעלות",
+    geneType: "transcription-regulator",
     proteinName: "BRPF1",
     tissueRole: "ויסות שעתוק גנים",
   },

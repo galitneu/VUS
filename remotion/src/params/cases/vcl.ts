@@ -11,7 +11,7 @@ export const CASE_VCL: VUSVideoParams = {
   },
   gene: {
     functionDescription: "מקודד חלבון מבני בתאי שריר הלב",
-    functionAnalogy: "סיכות שמחזיקות יחד את מבנה תא שריר הלב",
+    geneType: "structural",
     proteinName: "Vinculin",
     tissueRole: "שריר הלב",
   },

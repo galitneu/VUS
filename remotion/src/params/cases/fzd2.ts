@@ -14,7 +14,7 @@ export const CASE_FZD2: VUSVideoParams = {
   gene: {
     functionDescription:
       "מקודד קולטן במסלול התפתחותי המעורב בבניית שלד ופנים",
-    functionAnalogy: "מקלט אות שמנחה את התפתחות עצמות ומבנה הפנים",
+    geneType: "receptor",
     proteinName: "FZD2",
     tissueRole: "התפתחות שלד ופנים",
   },

@@ -17,7 +17,7 @@ export const CASE_COL4A2: VUSVideoParams = {
   gene: {
     functionDescription:
       "מקודד תת-יחידה של קולגן IV, חלבון מבני בקרומי הבסיס",
-    functionAnalogy: "פיגומים שמחזיקים יחד רקמות שונות בגוף",
+    geneType: "structural",
     proteinName: "קולגן IV",
     tissueRole: "קרומי בסיס",
     literatureContext: "מחלות כלי דם קטנים במוח",

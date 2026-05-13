@@ -14,6 +14,15 @@ export type ClinicalSetting =
   | "family_planning"
   | "active_pregnancy";
 
+export type GeneType =
+  | "structural"
+  | "transcription-regulator"
+  | "enzyme"
+  | "receptor"
+  | "ubiquitin-ligase"
+  | "transport"
+  | "other";
+
 export type BlockId =
   | "5-A"
   | "5-B1"
@@ -49,7 +58,7 @@ export interface VUSVideoParams {
   };
   gene: {
     functionDescription: string;
-    functionAnalogy: string;
+    geneType: GeneType;
     proteinName: string;
     tissueRole: string;
     literatureContext?: string;
