@@ -6,6 +6,7 @@ import { Opening } from "./scenes/Opening";
 import { VariantIntro } from "./scenes/VariantIntro";
 import { Categories } from "./scenes/Categories";
 import { NotVUS } from "./scenes/NotVUS";
+import { SpecificVariant } from "./scenes/SpecificVariant";
 
 const dur = (seconds: number) => Math.round(seconds * FPS);
 
@@ -42,6 +43,12 @@ export const Video: React.FC<{ params: VUSVideoParams }> = ({ params }) => {
         durationInFrames={dur(sceneDurations.notVUS)}
       >
         <NotVUS />
+      </Sequence>
+      <Sequence
+        from={at(sceneDurations.specificVariant)}
+        durationInFrames={dur(sceneDurations.specificVariant)}
+      >
+        <SpecificVariant params={params} />
       </Sequence>
     </AbsoluteFill>
   );

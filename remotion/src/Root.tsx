@@ -4,6 +4,7 @@ import { Opening } from "./scenes/Opening";
 import { VariantIntro } from "./scenes/VariantIntro";
 import { Categories } from "./scenes/Categories";
 import { NotVUS } from "./scenes/NotVUS";
+import { SpecificVariant } from "./scenes/SpecificVariant";
 import { Video } from "./Video";
 import { CASE_COL4A2 } from "./params/cases/mvp_col4a2";
 import {
@@ -50,6 +51,15 @@ export const RemotionRoot: React.FC = () => {
         fps={FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+      />
+      <Composition
+        id="SpecificVariant"
+        component={SpecificVariant}
+        durationInFrames={Math.round(sceneDurations.specificVariant * FPS)}
+        fps={FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={{ params: CASE_COL4A2 }}
       />
       <Composition
         id="Video"
