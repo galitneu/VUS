@@ -7,6 +7,7 @@ import { NotVUS } from "./scenes/NotVUS";
 import { SpecificVariant } from "./scenes/SpecificVariant";
 import { WhyUncertain } from "./scenes/WhyUncertain";
 import { Timeline } from "./scenes/Timeline";
+import { Closing } from "./scenes/Closing";
 import { Video } from "./Video";
 import { CASE_COL4A2 } from "./params/cases/mvp_col4a2";
 import {
@@ -82,6 +83,14 @@ export const RemotionRoot: React.FC = () => {
           inClinvar: CASE_COL4A2.variant.inClinvar,
           clinvarAccession: CASE_COL4A2.variant.clinvarAccession,
         }}
+      />
+      <Composition
+        id="Closing"
+        component={Closing}
+        durationInFrames={Math.round(sceneDurations.closing * FPS)}
+        fps={FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
       />
       <Composition
         id="Video"

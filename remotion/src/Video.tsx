@@ -9,6 +9,7 @@ import { NotVUS } from "./scenes/NotVUS";
 import { SpecificVariant } from "./scenes/SpecificVariant";
 import { WhyUncertain } from "./scenes/WhyUncertain";
 import { Timeline } from "./scenes/Timeline";
+import { Closing } from "./scenes/Closing";
 
 const dur = (seconds: number) => Math.round(seconds * FPS);
 
@@ -66,6 +67,12 @@ export const Video: React.FC<{ params: VUSVideoParams }> = ({ params }) => {
           inClinvar={params.variant.inClinvar}
           clinvarAccession={params.variant.clinvarAccession}
         />
+      </Sequence>
+      <Sequence
+        from={at(sceneDurations.closing)}
+        durationInFrames={dur(sceneDurations.closing)}
+      >
+        <Closing />
       </Sequence>
     </AbsoluteFill>
   );
