@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VUS — תצוגה מקדימה: פתיחה</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500&family=Heebo:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a1729;
+    --bg-mid: #152540;
+    --bg-darker: #050d18;
+    --text-primary: #f4ede3;
+    --text-secondary: #8ba4be;
+    --text-muted: #5a7390;
+    --accent: #d4a574;
+    --accent-glow: rgba(212, 165, 116, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-darker);
+    font-family: 'Heebo', sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    gap: 20px;
+  }
+
+  .frame-label {
+    font-family: 'Heebo', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  .scene-wrapper {
+    width: 100%;
+    max-width: 760px;
+  }
+
+  .scene {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: radial-gradient(ellipse at 50% 40%, var(--bg-mid) 0%, var(--bg-deep) 70%, var(--bg-darker) 100%);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Subtle noise overlay for atmosphere */
+  .scene::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
+  /* DNA sequence at top */
+  .sequence-container {
+    position: absolute;
+    top: 18%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    direction: ltr;
+    gap: 3px;
+    opacity: 0;
+    animation: sequenceIn 1.2s ease forwards 0.6s;
+    padding: 0 4%;
+  }
+
+  .nucleotide {
+    font-family: 'Heebo', monospace;
+    font-size: clamp(10px, 1.5vw, 15px);
+    font-weight: 300;
+    color: var(--text-muted);
+    width: clamp(13px, 1.9vw, 18px);
+    text-align: center;
+    transition: all 0.4s ease;
+  }
+
+  .nucleotide.highlight {
+    color: var(--accent);
+    font-weight: 400;
+    text-shadow: 0 0 10px var(--accent-glow);
+    animation: pulse 3s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { text-shadow: 0 0 10px var(--accent-glow); }
+    50% { text-shadow: 0 0 22px var(--accent-glow), 0 0 32px var(--accent-glow); }
+  }
+
+  @keyframes sequenceIn { to { opacity: 1; } }
+
+  /* Text area in center */
+  .text-zone {
+    position: absolute;
+    top: 42%;
+    left: 8%;
+    right: 8%;
+    bottom: 20%;
+    text-align: center;
+    direction: rtl;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text-line {
+    position: absolute;
+    opacity: 0;
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--text-primary);
+    max-width: 92%;
+    font-size: clamp(16px, 2.6vw, 24px);
+    letter-spacing: 0.01em;
+  }
+
+  .text-line .em {
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .line-1 { animation: cycle 4s ease forwards 3s; }
+  .line-2 { animation: cycle 4s ease forwards 7s; }
+  .line-3 { animation: appear 1.2s ease forwards 11s; }
+
+  @keyframes cycle {
+    0% { opacity: 0; transform: translateY(8px); }
+    18% { opacity: 1; transform: translateY(0); }
+    82% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-8px); }
+  }
+
+  @keyframes appear {
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Subtitle for the topic label */
+  .topic-label {
+    position: absolute;
+    top: 7%;
+    right: 5%;
+    font-family: 'Heebo', sans-serif;
+    font-size: clamp(9px, 1.1vw, 11px);
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: appear 1s ease forwards 0.3s;
+  }
+
+  /* Progress bar */
+  .timer-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: var(--accent);
+    width: 0%;
+    opacity: 0.4;
+    animation: timer 15s linear forwards;
+  }
+  @keyframes timer { to { width: 100%; } }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 4px;
+  }
+
+  .btn {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--text-muted);
+    padding: 9px 22px;
+    font-family: 'Heebo', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+    direction: rtl;
+    letter-spacing: 0.5px;
+  }
+  .btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .meta {
+    font-family: 'Heebo', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    direction: rtl;
+    max-width: 720px;
+    line-height: 1.7;
+    opacity: 0.65;
+    font-weight: 300;
+    padding: 0 8px;
+  }
+  .meta strong { color: var(--text-secondary); font-weight: 400; }
+
+  @media (max-width: 480px) {
+    .meta { font-size: 10px; }
+    .frame-label { font-size: 10px; letter-spacing: 2px; }
+  }
+</style>
+</head>
+<body>
+  <div class="frame-label">פתיחה · 15 שניות</div>
+
+  <div class="scene-wrapper">
+    <div class="scene" id="scene">
+      <div class="topic-label">VUS · משמעות לא ודאית</div>
+
+      <div class="sequence-container" id="seq"></div>
+
+      <div class="text-zone">
+        <div class="text-line line-1">
+          תוצאה של בדיקה גנטית עם סיווג <span class="em">"משמעות לא ודאית"</span>
+        </div>
+        <div class="text-line line-2">
+          מציגה תמונה מורכבת — לא תשובה ברורה לכאן או לכאן
+        </div>
+        <div class="text-line line-3">
+          הסרטון מסביר מה משמעות הסיווג, ומה ידוע על הוריאנט הספציפי
+        </div>
+      </div>
+
+      <div class="timer-bar"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn" onclick="replay()">הפעלה מחדש</button>
+  </div>
+
+  <div class="meta">
+    <strong>הערה:</strong> תצוגה מקדימה ויזואלית בלבד, ללא קריינות. הקצב מדמה את התזמון בפועל.
+    הרצף בחלק העליון מציג שורת נוקליאוטידים שבה אות אחת מודגשת — מטאפורה ויזואלית לוריאנט.
+  </div>
+
+<script>
+  const sequence = 'ACGTAGCGCTAGCTGTAGCTAGCTGACGTACGTAGCT';
+  const highlightIndex = 16;
+
+  function buildSequence(container) {
+    container.innerHTML = '';
+    sequence.split('').forEach((letter, i) => {
+      const span = document.createElement('span');
+      span.className = 'nucleotide';
+      if (i === highlightIndex) span.classList.add('highlight');
+      span.textContent = letter;
+      container.appendChild(span);
+    });
+  }
+
+  function replay() {
+    location.reload();
+  }
+
+  buildSequence(document.getElementById('seq'));
+</script>
+</body>
+</html>
