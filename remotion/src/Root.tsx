@@ -5,6 +5,7 @@ import { VariantIntro } from "./scenes/VariantIntro";
 import { Categories } from "./scenes/Categories";
 import { NotVUS } from "./scenes/NotVUS";
 import { SpecificVariant } from "./scenes/SpecificVariant";
+import { WhyUncertain } from "./scenes/WhyUncertain";
 import { Video } from "./Video";
 import { CASE_COL4A2 } from "./params/cases/mvp_col4a2";
 import {
@@ -60,6 +61,14 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         defaultProps={{ params: CASE_COL4A2 }}
+      />
+      <Composition
+        id="WhyUncertain"
+        component={WhyUncertain}
+        durationInFrames={Math.round(sceneDurations.whyUncertain * FPS)}
+        fps={FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
       />
       <Composition
         id="Video"

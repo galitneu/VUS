@@ -7,6 +7,7 @@ import { VariantIntro } from "./scenes/VariantIntro";
 import { Categories } from "./scenes/Categories";
 import { NotVUS } from "./scenes/NotVUS";
 import { SpecificVariant } from "./scenes/SpecificVariant";
+import { WhyUncertain } from "./scenes/WhyUncertain";
 
 const dur = (seconds: number) => Math.round(seconds * FPS);
 
@@ -49,6 +50,12 @@ export const Video: React.FC<{ params: VUSVideoParams }> = ({ params }) => {
         durationInFrames={dur(sceneDurations.specificVariant)}
       >
         <SpecificVariant params={params} />
+      </Sequence>
+      <Sequence
+        from={at(sceneDurations.whyUncertain)}
+        durationInFrames={dur(sceneDurations.whyUncertain)}
+      >
+        <WhyUncertain />
       </Sequence>
     </AbsoluteFill>
   );
