@@ -3,10 +3,11 @@ import { AbsoluteFill, Sequence } from "remotion";
 import type { VUSVideoParams } from "./params/types";
 import { FPS, sceneDurations } from "./design/tokens";
 import { Opening } from "./scenes/Opening";
+import { VariantIntro } from "./scenes/VariantIntro";
 
 const dur = (seconds: number) => Math.round(seconds * FPS);
 
-export const Video: React.FC<{ params: VUSVideoParams }> = () => {
+export const Video: React.FC<{ params: VUSVideoParams }> = ({ params }) => {
   let cursor = 0;
   const at = (seconds: number) => {
     const from = cursor;
@@ -16,8 +17,17 @@ export const Video: React.FC<{ params: VUSVideoParams }> = () => {
 
   return (
     <AbsoluteFill>
-      <Sequence from={at(sceneDurations.opening)} durationInFrames={dur(sceneDurations.opening)}>
+      <Sequence
+        from={at(sceneDurations.opening)}
+        durationInFrames={dur(sceneDurations.opening)}
+      >
         <Opening />
+      </Sequence>
+      <Sequence
+        from={at(sceneDurations.variantIntro)}
+        durationInFrames={dur(sceneDurations.variantIntro)}
+      >
+        <VariantIntro geneName={params.variant.geneName} />
       </Sequence>
     </AbsoluteFill>
   );
