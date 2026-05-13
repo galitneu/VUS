@@ -5,6 +5,7 @@ import { FPS, sceneDurations } from "./design/tokens";
 import { Opening } from "./scenes/Opening";
 import { VariantIntro } from "./scenes/VariantIntro";
 import { Categories } from "./scenes/Categories";
+import { NotVUS } from "./scenes/NotVUS";
 
 const dur = (seconds: number) => Math.round(seconds * FPS);
 
@@ -35,6 +36,12 @@ export const Video: React.FC<{ params: VUSVideoParams }> = ({ params }) => {
         durationInFrames={dur(sceneDurations.categories)}
       >
         <Categories />
+      </Sequence>
+      <Sequence
+        from={at(sceneDurations.notVUS)}
+        durationInFrames={dur(sceneDurations.notVUS)}
+      >
+        <NotVUS />
       </Sequence>
     </AbsoluteFill>
   );

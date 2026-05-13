@@ -9,6 +9,7 @@
     "build:opening": "remotion render Opening out/opening.mp4",
     "build:variant-intro": "remotion render VariantIntro out/variant-intro.mp4",
     "build:categories": "remotion render Categories out/categories.mp4",
+    "build:not-vus": "remotion render NotVUS out/not-vus.mp4",
     "typecheck": "tsc",
     "check:blocks": "npx tsx scripts/check-blocks.ts"
   },
