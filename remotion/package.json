@@ -12,6 +12,7 @@
     "build:not-vus": "remotion render NotVUS out/not-vus.mp4",
     "build:specific-variant": "remotion render SpecificVariant out/specific-variant.mp4",
     "build:why-uncertain": "remotion render WhyUncertain out/why-uncertain.mp4",
+    "build:timeline": "remotion render Timeline out/timeline.mp4",
     "typecheck": "tsc",
     "check:blocks": "npx tsx scripts/check-blocks.ts"
   },

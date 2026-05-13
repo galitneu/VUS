@@ -8,6 +8,7 @@ import { Categories } from "./scenes/Categories";
 import { NotVUS } from "./scenes/NotVUS";
 import { SpecificVariant } from "./scenes/SpecificVariant";
 import { WhyUncertain } from "./scenes/WhyUncertain";
+import { Timeline } from "./scenes/Timeline";
 
 const dur = (seconds: number) => Math.round(seconds * FPS);
 
@@ -56,6 +57,15 @@ export const Video: React.FC<{ params: VUSVideoParams }> = ({ params }) => {
         durationInFrames={dur(sceneDurations.whyUncertain)}
       >
         <WhyUncertain />
+      </Sequence>
+      <Sequence
+        from={at(sceneDurations.timeline)}
+        durationInFrames={dur(sceneDurations.timeline)}
+      >
+        <Timeline
+          inClinvar={params.variant.inClinvar}
+          clinvarAccession={params.variant.clinvarAccession}
+        />
       </Sequence>
     </AbsoluteFill>
   );
