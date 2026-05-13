@@ -1,0 +1,31 @@
+{
+  "name": "vus-remotion",
+  "version": "0.1.0",
+  "description": "VUS explainer videos — Remotion compositions",
+  "private": true,
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion render Opening out/opening.mp4",
+    "typecheck": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fontsource/frank-ruhl-libre": "^5.2.8",
+    "@fontsource/heebo": "^5.2.8",
+    "@remotion/bundler": "^4.0.460",
+    "@remotion/cli": "^4.0.460",
+    "@remotion/google-fonts": "^4.0.460",
+    "@remotion/renderer": "^4.0.460",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.460"
+  },
+  "devDependencies": {
+    "@types/node": "^25.7.0",
+    "@types/react": "^18.3.28",
+    "@types/react-dom": "^18.3.7",
+    "typescript": "^6.0.3"
+  }
+}
