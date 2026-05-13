@@ -5,96 +5,56 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { theme, fonts } from "./theme";
+import { colors, fonts } from "../design/tokens";
+import {
+  type FadeWindow,
+  opacityForWindow,
+  translateYForWindow,
+  sec,
+} from "../design/animations";
 
 const SEQUENCE = "ACGTAGCGCTAGCTGTAGCTAGCTGACGTACGTAGCT";
 const HIGHLIGHT_INDEX = 16;
 
-type FadeWindow = {
-  fadeInStart: number;
-  fadeInEnd: number;
-  fadeOutStart?: number;
-  fadeOutEnd?: number;
-};
-
-const opacityForWindow = (frame: number, w: FadeWindow): number => {
-  let opacity = interpolate(
-    frame,
-    [w.fadeInStart, w.fadeInEnd],
-    [0, 1],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  );
-  if (w.fadeOutStart !== undefined && w.fadeOutEnd !== undefined) {
-    const fade = interpolate(
-      frame,
-      [w.fadeOutStart, w.fadeOutEnd],
-      [1, 0],
-      { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-    );
-    opacity = Math.min(opacity, fade);
-  }
-  return opacity;
-};
-
-const translateYForWindow = (frame: number, w: FadeWindow): number => {
-  const inY = interpolate(
-    frame,
-    [w.fadeInStart, w.fadeInEnd],
-    [8, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  );
-  if (w.fadeOutStart !== undefined && w.fadeOutEnd !== undefined) {
-    const outY = interpolate(
-      frame,
-      [w.fadeOutStart, w.fadeOutEnd],
-      [0, -8],
-      { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-    );
-    return frame >= w.fadeOutStart ? outY : inY;
-  }
-  return inY;
-};
-
 export const Opening: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-
-  const sec = (s: number) => s * fps;
+  const s = (t: number) => sec(t, fps);
 
   const sequenceFade: FadeWindow = {
-    fadeInStart: sec(0.6),
-    fadeInEnd: sec(1.8),
+    fadeInStart: s(0.6),
+    fadeInEnd: s(1.8),
   };
 
   const topicLabelFade: FadeWindow = {
-    fadeInStart: sec(0.3),
-    fadeInEnd: sec(1.3),
+    fadeInStart: s(0.3),
+    fadeInEnd: s(1.3),
   };
 
   const line1: FadeWindow = {
-    fadeInStart: sec(3),
-    fadeInEnd: sec(3.72),
-    fadeOutStart: sec(6.28),
-    fadeOutEnd: sec(7),
+    fadeInStart: s(2),
+    fadeInEnd: s(2.72),
+    fadeOutStart: s(5.28),
+    fadeOutEnd: s(6),
   };
 
   const line2: FadeWindow = {
-    fadeInStart: sec(7),
-    fadeInEnd: sec(7.72),
-    fadeOutStart: sec(10.28),
-    fadeOutEnd: sec(11),
+    fadeInStart: s(6),
+    fadeInEnd: s(6.72),
+    fadeOutStart: s(9.28),
+    fadeOutEnd: s(10),
   };
 
   const line3: FadeWindow = {
-    fadeInStart: sec(11),
-    fadeInEnd: sec(12.2),
+    fadeInStart: s(10),
+    fadeInEnd: s(11.2),
   };
 
   const pulseT = (Math.sin((frame / fps) * Math.PI * (2 / 3)) + 1) / 2;
   const glowBlur = 10 + pulseT * 22;
   const glowExtra = pulseT * 32;
 
-  const timerWidth = interpolate(frame, [0, sec(15)], [0, 100], {
+  const timerWidth = interpolate(frame, [0, s(15)], [0, 100], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -102,7 +62,7 @@ export const Opening: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        background: `radial-gradient(ellipse at 50% 40%, ${theme.bgMid} 0%, ${theme.bgDeep} 70%, ${theme.bgDarker} 100%)`,
+        background: `radial-gradient(ellipse at 50% 40%, ${colors.bgMid} 0%, ${colors.bgDeep} 70%, ${colors.bgDarker} 100%)`,
         fontFamily: fonts.sans,
         direction: "rtl",
       }}
@@ -114,7 +74,7 @@ export const Opening: React.FC = () => {
           right: "5%",
           fontFamily: fonts.sans,
           fontSize: 18,
-          color: theme.textMuted,
+          color: colors.textMuted,
           letterSpacing: 3.6,
           textTransform: "uppercase",
           fontWeight: 300,
@@ -147,11 +107,11 @@ export const Opening: React.FC = () => {
                 fontFamily: fonts.sans,
                 fontSize: 28,
                 fontWeight: isHighlight ? 400 : 300,
-                color: isHighlight ? theme.accent : theme.textMuted,
+                color: isHighlight ? colors.accent : colors.textMuted,
                 width: 34,
                 textAlign: "center",
                 textShadow: isHighlight
-                  ? `0 0 ${glowBlur}px ${theme.accentGlow}, 0 0 ${glowExtra}px ${theme.accentGlow}`
+                  ? `0 0 ${glowBlur}px ${colors.accentGlow}, 0 0 ${glowExtra}px ${colors.accentGlow}`
                   : "none",
               }}
             >
@@ -177,7 +137,7 @@ export const Opening: React.FC = () => {
         <TextLine window={line1} frame={frame}>
           <>
             תוצאה של בדיקה גנטית עם סיווג{" "}
-            <span style={{ color: theme.accent, fontWeight: 400 }}>
+            <span style={{ color: colors.accent, fontWeight: 400 }}>
               &ldquo;משמעות לא ודאית&rdquo;
             </span>
           </>
@@ -197,7 +157,7 @@ export const Opening: React.FC = () => {
           left: 0,
           height: 2,
           width: `${timerWidth}%`,
-          background: theme.accent,
+          background: colors.accent,
           opacity: 0.4,
         }}
       />
@@ -219,7 +179,7 @@ const TextLine: React.FC<{
         fontFamily: fonts.serif,
         fontWeight: 300,
         lineHeight: 1.5,
-        color: theme.textPrimary,
+        color: colors.textPrimary,
         maxWidth: "92%",
         fontSize: 44,
         letterSpacing: "0.01em",
