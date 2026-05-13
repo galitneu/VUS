@@ -1,8 +1,10 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
   Easing,
   interpolate,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -32,6 +34,7 @@ export const SpecificVariant: React.FC<Props> = ({ params }) => {
         direction: "rtl",
       }}
     >
+      <Audio src={staticFile("audio/specific-variant.mp3")} />
       <div
         style={{
           position: "absolute",

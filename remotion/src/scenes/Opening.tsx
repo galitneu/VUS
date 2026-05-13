@@ -1,7 +1,9 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
   interpolate,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -67,6 +69,7 @@ export const Opening: React.FC = () => {
         direction: "rtl",
       }}
     >
+      <Audio src={staticFile("audio/opening.mp3")} />
       <div
         style={{
           position: "absolute",

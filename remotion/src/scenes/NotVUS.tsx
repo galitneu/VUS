@@ -1,6 +1,8 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -61,6 +63,7 @@ export const NotVUS: React.FC = () => {
         direction: "rtl",
       }}
     >
+      <Audio src={staticFile("audio/not-vus.mp3")} />
       <div
         style={{
           position: "absolute",

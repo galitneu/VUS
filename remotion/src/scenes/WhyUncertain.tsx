@@ -1,6 +1,8 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -46,6 +48,7 @@ export const WhyUncertain: React.FC = () => {
         direction: "rtl",
       }}
     >
+      <Audio src={staticFile("audio/why-uncertain.mp3")} />
       <div
         style={{
           position: "absolute",

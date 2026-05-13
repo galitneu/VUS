@@ -1,6 +1,8 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -30,6 +32,7 @@ export const Closing: React.FC = () => {
         direction: "rtl",
       }}
     >
+      <Audio src={staticFile("audio/closing.mp3")} />
       <div
         style={{
           position: "absolute",

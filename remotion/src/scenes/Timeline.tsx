@@ -1,6 +1,8 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -77,6 +79,7 @@ export const Timeline: React.FC<Props> = ({
         direction: "rtl",
       }}
     >
+      <Audio src={staticFile("audio/timeline.mp3")} />
       <div
         style={{
           position: "absolute",
