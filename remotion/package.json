@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "remotion studio",
     "build": "remotion render Opening out/opening.mp4",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "check:blocks": "tsx scripts/check-blocks.ts"
   },
   "keywords": [],
   "author": "",

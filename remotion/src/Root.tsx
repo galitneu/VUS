@@ -2,7 +2,7 @@ import React from "react";
 import { Composition } from "remotion";
 import { Opening } from "./scenes/Opening";
 import { Video } from "./Video";
-import { MVP_PARAMS } from "./params/mvp";
+import { CASE_COL4A2 } from "./params/cases/mvp_col4a2";
 import { FPS, VIDEO_WIDTH, VIDEO_HEIGHT, sceneDurations, totalDurationSeconds } from "./design/tokens";
 import "./fonts";
 
@@ -24,7 +24,7 @@ export const RemotionRoot: React.FC = () => {
         fps={FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={{ params: MVP_PARAMS }}
+        defaultProps={{ params: CASE_COL4A2 }}
       />
     </>
   );
