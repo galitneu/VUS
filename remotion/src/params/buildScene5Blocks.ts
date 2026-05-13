@@ -23,7 +23,13 @@ export function buildScene5Blocks(params: VUSVideoParams): BlockId[] {
     rare: "5-D2",
     present: "5-D3",
   };
-  blocks.push(popMap[params.variant.populationStatus]);
+  const isLOF = ["nonsense", "splice"].includes(params.variant.variantType ?? "");
+  const isHighTolerance = params.gene.toleranceLevel === "high";
+  if (params.variant.populationStatus === "absent" && isLOF && isHighTolerance) {
+    blocks.push("5-D4");
+  } else {
+    blocks.push(popMap[params.variant.populationStatus]);
+  }
 
   if (params.variant.predictionAvailable && params.variant.predictionStrength) {
     const predMap: Record<NonNullable<VUSVideoParams["variant"]["predictionStrength"]>, BlockId> = {
@@ -34,11 +40,17 @@ export function buildScene5Blocks(params: VUSVideoParams): BlockId[] {
     blocks.push(predMap[params.variant.predictionStrength]);
   }
 
-  if (params.gene.literatureContext) blocks.push("5-F1");
+  if (params.gene.literatureContext) {
+    blocks.push(params.gene.onsetTiming === "adult" ? "5-F2" : "5-F1");
+  }
 
   if (params.cnv) {
     if (params.cnv.lofInHealthyPopulation) blocks.push("5-G1");
     if (params.cnv.keyGeneKnownPathogenic) blocks.push("5-G2");
+  }
+
+  if (params.gene.inheritanceMode === "recessive" && params.variant.variantClass === "snv") {
+    blocks.push("5-H1");
   }
 
   return blocks;

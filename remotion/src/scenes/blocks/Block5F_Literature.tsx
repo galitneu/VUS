@@ -17,11 +17,13 @@ const fadeWindow = (frame: number, start: number, end: number) =>
 type Props = BlockProps & {
   geneName: string;
   literatureContext: string;
+  isAdultOnset?: boolean;
 };
 
 export const Block5F_Literature: React.FC<Props> = ({
   geneName,
   literatureContext,
+  isAdultOnset = false,
   localFrame,
   fps,
   index,
@@ -97,6 +99,14 @@ export const Block5F_Literature: React.FC<Props> = ({
             {geneName}
           </span>{" "}
           תוארו בספרות המדעית בהקשר של {literatureContext}.
+          {isAdultOnset && (
+            <>
+              {" "}
+              <span style={{ color: colors.textSecondary }}>
+                מחלה המתבטאת בד״כ בבגרות.
+              </span>
+            </>
+          )}
         </BlockCaption>
       </div>
     </>

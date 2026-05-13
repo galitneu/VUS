@@ -35,12 +35,15 @@ export type BlockId =
   | "5-D1"
   | "5-D2"
   | "5-D3"
+  | "5-D4"
   | "5-E1"
   | "5-E2"
   | "5-E3"
   | "5-F1"
+  | "5-F2"
   | "5-G1"
-  | "5-G2";
+  | "5-G2"
+  | "5-H1";
 
 export interface VUSVideoParams {
   variant: {
@@ -62,6 +65,9 @@ export interface VUSVideoParams {
     proteinName: string;
     tissueRole: string;
     literatureContext?: string;
+    inheritanceMode?: "dominant" | "recessive" | "x-linked" | "variable";
+    onsetTiming?: "fetal" | "pediatric" | "adult" | "variable";
+    toleranceLevel?: "low" | "high";
   };
   cnv?: {
     sizeBp: number;
