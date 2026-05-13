@@ -15,7 +15,8 @@
     "build:timeline": "remotion render Timeline out/timeline.mp4",
     "build:closing": "remotion render Closing out/closing.mp4",
     "typecheck": "tsc",
-    "check:blocks": "npx tsx scripts/check-blocks.ts"
+    "check:blocks": "npx tsx scripts/check-blocks.ts",
+    "generate-audio": "npx tsx scripts/generate-audio.ts"
   },
   "keywords": [],
   "author": "",
