@@ -2,78 +2,98 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  interpolate,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { ThreeCanvas } from "@remotion/three";
 import { colors, fonts } from "../design/tokens";
+import { Ltr } from "../components/Ltr";
+import { Scene3D } from "./gene-scene/Scene3D";
 import {
-  type FadeWindow,
-  opacityForWindow,
-  translateYForWindow,
-  fadeIn,
-  fadeInOut,
-} from "../design/animations";
-import { ChromosomeBar } from "../components/ChromosomeBar";
-import { SequenceZoom } from "../components/SequenceZoom";
+  getStageState,
+  GENE_Y,
+  STAGE_NAMES,
+  type StageState,
+} from "./gene-scene/rig";
 
-const SEQUENCE_LETTERS = "ACGTAGCTACGAT";
-const SEQ_HIGHLIGHT_INDEX = 6;
-const CHROM_WIDTH = 1100;
-const CHROM_HEIGHT = 64;
-const CHROM_HIGHLIGHT_START = 0.46;
-const CHROM_HIGHLIGHT_END = 0.54;
-const PIN_X_FRACTION = 0.5;
+type Props = { geneName: string; notation?: string };
 
-const Y_TOPIC_LABEL = 70;
-const Y_PIN_LABEL = 160;
-const Y_PIN_LINE = 200;
-const Y_CHROM = 250;
-const Y_CHROM_LABEL = Y_CHROM + CHROM_HEIGHT + 26;
-const Y_ARROW = 410;
-const Y_SEQ = 480;
-const Y_VARIANT_LABEL = Y_SEQ + 84;
-const Y_TEXT_AREA = 740;
+const GENE_CLAUSE_AT = 2.2; // seconds into stage 0 — spec committee rule
 
-type Props = { geneName: string };
+// "c.2552G>T (p.Gly851Val)" -> ["G", "T"]; falls back to the spec defaults.
+const parseBases = (notation?: string): [string, string] => {
+  const m = notation?.match(/([ACGT])>([ACGT])/);
+  return m ? [m[1], m[2]] : ["G", "T"];
+};
 
-export const VariantIntro: React.FC<Props> = ({ geneName }) => {
+/** Which stage's narration to show — switches at the transition midpoint. */
+const narrationStageOf = (s: StageState): 0 | 1 | 2 =>
+  s.inTransition && s.transT < 0.5 ? s.fromStage : s.stage;
+
+export const VariantIntro: React.FC<Props> = ({ geneName, notation }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, durationInFrames, width, height } = useVideoConfig();
+  const timeSec = frame / fps;
+  const totalSec = durationInFrames / fps;
 
-  const chromFade = fadeIn(0.3, "slow", fps);
-  const chromLabelFade = fadeIn(0.8, "slow", fps);
+  const state = getStageState(timeSec, totalSec);
+  const [origBase, varBase] = parseBases(notation);
 
-  const geneHighlightFade = fadeIn(2.0, "slow", fps);
-  const pinFade = fadeIn(2.6, "slow", fps);
+  const sceneOpacity = interpolate(frame, [0, fps * 0.6], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
-  const arrowFade = fadeIn(4.2, "slow", fps);
-  const seqFade = fadeIn(4.7, "slow", fps);
-  const variantLabelFade = fadeIn(6.2, "slow", fps);
+  const nStage = narrationStageOf(state);
+  const narrationOpacity = state.inTransition
+    ? 0.25 + Math.abs(state.transT - 0.5) * 2 * 0.75
+    : 1;
 
-  const line1 = fadeInOut(7, "medium", 12.3, "medium", fps);
-  const line2 = fadeInOut(13, "medium", 18.3, "medium", fps);
-  const line3 = fadeIn(19, "slow", fps);
+  const showGeneClause =
+    state.stage === 0 &&
+    !state.inTransition &&
+    state.stageTimeSec > GENE_CLAUSE_AT;
 
-  const pulseT = (Math.sin((frame / fps) * Math.PI * (2 / 3)) + 1) / 2;
-  const pulseOpacity = 0.82 + pulseT * 0.18;
+  // Callout appears with the gene clause, during the stage-0 hold only.
+  const calloutOpacity =
+    state.stage === 0 && !state.inTransition
+      ? interpolate(
+          state.stageTimeSec,
+          [GENE_CLAUSE_AT, GENE_CLAUSE_AT + 0.6],
+          [0, 1],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+        )
+      : 0;
 
-  const chromLeft = (1920 - CHROM_WIDTH) / 2;
-  const pinAbsX = chromLeft + PIN_X_FRACTION * CHROM_WIDTH;
+  const breadcrumbVisible = nStage >= 1;
+  const progress = Math.min(1, frame / durationInFrames);
 
   return (
     <AbsoluteFill
       style={{
-        background: `radial-gradient(ellipse at 50% 40%, ${colors.bgMid} 0%, ${colors.bgDeep} 70%, ${colors.bgDarker} 100%)`,
+        background: `radial-gradient(ellipse at 50% 45%, ${colors.bgMid} 0%, ${colors.bgDeep} 55%, ${colors.bgDarker} 100%)`,
         fontFamily: fonts.sans,
         direction: "rtl",
+        opacity: sceneOpacity,
       }}
     >
       <Audio src={staticFile("audio/variant-intro.mp3")} />
+
+      <ThreeCanvas
+        width={width}
+        height={height}
+        style={{ position: "absolute", inset: 0 }}
+      >
+        <Scene3D />
+      </ThreeCanvas>
+
+      {/* topic label — consistent with the other scenes */}
       <div
         style={{
           position: "absolute",
-          top: Y_TOPIC_LABEL,
+          top: 60,
           right: 80,
           fontSize: 18,
           color: colors.textMuted,
@@ -82,194 +102,249 @@ export const VariantIntro: React.FC<Props> = ({ geneName }) => {
           fontWeight: 300,
         }}
       >
-        VUS · משמעות לא ודאית
+        <Ltr style={{ fontFamily: fonts.sansLatin }}>VUS</Ltr> · משמעות לא ודאית
       </div>
 
+      {/* stage tag */}
       <div
         style={{
           position: "absolute",
-          top: Y_CHROM,
-          left: chromLeft,
-          opacity: opacityForWindow(frame, chromFade),
-        }}
-      >
-        <ChromosomeBar
-          width={CHROM_WIDTH}
-          height={CHROM_HEIGHT}
-          highlight={{
-            start: CHROM_HIGHLIGHT_START,
-            end: CHROM_HIGHLIGHT_END,
-            opacity: opacityForWindow(frame, geneHighlightFade) * pulseOpacity,
-          }}
-        />
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          top: Y_CHROM_LABEL,
+          top: 58,
           left: 0,
           right: 0,
           textAlign: "center",
-          fontSize: 18,
-          color: colors.textMuted,
-          letterSpacing: 1.4,
-          opacity: opacityForWindow(frame, chromLabelFade),
+          fontSize: 19,
+          color: colors.textSecondary,
+          letterSpacing: 2,
+          fontWeight: 300,
         }}
       >
-        כרומוזום · ~200 מיליון אותיות
+        שלב {state.stage + 1} מתוך 3 ·{" "}
+        <span style={{ color: colors.accent }}>
+          {STAGE_NAMES[state.stage]}
+        </span>
       </div>
 
-      {opacityForWindow(frame, pinFade) > 0.01 && (
-        <>
+      {/* breadcrumb mini-chromosome */}
+      {breadcrumbVisible && (
+        <svg
+          width={46}
+          height={84}
+          viewBox="0 0 46 84"
+          style={{ position: "absolute", top: 104, left: 90, opacity: 0.85 }}
+        >
+          <rect x={17} y={6} width={12} height={30} rx={6} fill={colors.textSecondary} />
+          <rect x={17} y={40} width={12} height={38} rx={6} fill={colors.textSecondary} />
+          <circle cx={23} cy={38} r={5.5} fill={colors.textMuted} />
+          <circle cx={23} cy={27} r={4.5} fill={colors.accent} />
+        </svg>
+      )}
+
+      {/* gene callout — stage 0 */}
+      {calloutOpacity > 0.01 && (
+        <div
+          style={{
+            position: "absolute",
+            top: 392,
+            right: 300,
+            opacity: calloutOpacity,
+            display: "flex",
+            alignItems: "center",
+            gap: 0,
+            direction: "ltr",
+          }}
+        >
           <div
             style={{
-              position: "absolute",
-              top: Y_PIN_LABEL,
-              left: pinAbsX,
-              transform: "translateX(-50%)",
-              opacity: opacityForWindow(frame, pinFade),
               background: colors.bgMid,
               border: `1px solid ${colors.accent}`,
               borderRadius: 4,
-              padding: "4px 14px",
-              fontSize: 22,
+              padding: "6px 16px",
+              fontSize: 24,
               color: colors.accent,
               letterSpacing: 1.5,
-              direction: "ltr",
-              unicodeBidi: "embed",
               whiteSpace: "nowrap",
             }}
           >
-            {geneName}
+            <Ltr style={{ fontFamily: fonts.sansLatin }}>{geneName}</Ltr>
           </div>
           <div
             style={{
-              position: "absolute",
-              top: Y_PIN_LINE,
-              left: pinAbsX,
-              width: 1,
-              height: Y_CHROM - Y_PIN_LINE,
+              width: 150,
+              height: 1,
               background: colors.accent,
-              opacity: opacityForWindow(frame, pinFade) * 0.85,
+              opacity: 0.7,
             }}
           />
-        </>
+          <div
+            style={{
+              width: 7,
+              height: 7,
+              borderRadius: "50%",
+              background: colors.accent,
+              marginLeft: -3,
+            }}
+          />
+        </div>
       )}
 
-      <div
-        style={{
-          position: "absolute",
-          top: Y_ARROW,
-          left: 0,
-          right: 0,
-          display: "flex",
-          justifyContent: "center",
-          opacity: opacityForWindow(frame, arrowFade),
-        }}
-      >
-        <svg width={44} height={56}>
-          <line
-            x1={22}
-            y1={2}
-            x2={22}
-            y2={42}
-            stroke={colors.textSecondary}
-            strokeWidth={1.6}
-          />
-          <polyline
-            points="10,34 22,50 34,34"
-            fill="none"
-            stroke={colors.textSecondary}
-            strokeWidth={1.6}
-            strokeLinejoin="round"
-            strokeLinecap="round"
-          />
-        </svg>
-      </div>
+      {/* base-pair labels — stage 2 */}
+      {nStage === 2 && (
+        <div
+          style={{
+            position: "absolute",
+            top: 600,
+            left: 0,
+            right: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            gap: 48,
+            direction: "ltr",
+            opacity: narrationOpacity,
+          }}
+        >
+          <ContextColumn letters={["A", "C", "G"]} />
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 26 }}>
+            <BaseLabel letter={origBase} caption="מקורי" color={colors.pathogenic} />
+            <div style={{ fontSize: 30, color: colors.textSecondary, marginTop: 8 }}>→</div>
+            <BaseLabel letter={varBase} caption="וריאנט" color={colors.accent} />
+          </div>
+          <ContextColumn letters={["T", "A", "C"]} />
+        </div>
+      )}
 
+      {/* narration */}
       <div
         style={{
           position: "absolute",
-          top: Y_SEQ,
-          left: 0,
-          right: 0,
-          display: "flex",
-          justifyContent: "center",
-          opacity: opacityForWindow(frame, seqFade),
-        }}
-      >
-        <SequenceZoom
-          letters={SEQUENCE_LETTERS}
-          highlightIndex={SEQ_HIGHLIGHT_INDEX}
-          highlightOpacity={pulseOpacity}
-        />
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          top: Y_VARIANT_LABEL,
-          left: 0,
-          right: 0,
+          bottom: 132,
+          left: "13%",
+          right: "13%",
           textAlign: "center",
-          fontSize: 14,
-          color: colors.accent,
-          letterSpacing: 5,
-          textTransform: "uppercase",
-          fontWeight: 400,
-          opacity: opacityForWindow(frame, variantLabelFade),
+          fontFamily: fonts.serif,
+          fontWeight: 300,
+          fontSize: 31,
+          lineHeight: 1.5,
+          color: colors.textPrimary,
+          letterSpacing: "0.01em",
+          opacity: narrationOpacity,
         }}
       >
-        וריאנט
+        {nStage === 0 && (
+          <>
+            כרומוזום הוא מבנה שנמצא בכל תא בגוף ומכיל חלק מהמידע הגנטי.
+            {showGeneClause && (
+              <>
+                {" "}
+                הגן <Ltr>{geneName}</Ltr> — זה שנמצא בבדיקה — יושב בנקודה
+                ספציפית על אחד מהכרומוזומים.
+              </>
+            )}
+          </>
+        )}
+        {nStage === 1 && (
+          <>
+            הגן עצמו בנוי מסליל של אותיות גנטיות — <Ltr>A</Ltr>, <Ltr>T</Ltr>,{" "}
+            <Ltr>G</Ltr> ו-<Ltr>C</Ltr>. הסדר המדויק של האותיות הוא ההוראה:
+            ממנו הגוף קורא כיצד לבנות חלבון.
+          </>
+        )}
+        {nStage === 2 && (
+          <>
+            הבדיקה זיהתה שינוי בנקודה ספציפית ברצף הגן: האות{" "}
+            <Ltr>{origBase}</Ltr> הוחלפה ב-<Ltr>{varBase}</Ltr>. זו האות
+            שנמצאת במוקד.
+          </>
+        )}
       </div>
 
+      {/* stage dots */}
       <div
         style={{
           position: "absolute",
-          top: Y_TEXT_AREA,
-          left: "8%",
-          right: "8%",
-          height: 200,
+          bottom: 46,
+          left: 0,
+          right: 0,
           display: "flex",
           justifyContent: "center",
-          alignItems: "flex-start",
+          gap: 14,
         }}
       >
-        <TextLine window={line1} frame={frame}>
-          גן הוא קטע בכרומוזום שמכיל הוראות לבניית חלבון
-        </TextLine>
-        <TextLine window={line2} frame={frame}>
-          וריאנט הוא שינוי בודד באחת מהאותיות הגנטיות בתוך הגן
-        </TextLine>
-        <TextLine window={line3} frame={frame}>
-          מרבית הוריאנטים אינם משפיעים על הבריאות — מיעוטם עשוי להשפיע
-        </TextLine>
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            style={{
+              width: 7,
+              height: 7,
+              borderRadius: "50%",
+              background:
+                i === state.stage ? colors.accent : colors.textMuted,
+              transform: i === state.stage ? "scale(1.5)" : "scale(1)",
+            }}
+          />
+        ))}
       </div>
+
+      {/* progress bar */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          height: 2,
+          width: `${progress * 100}%`,
+          background: colors.accent,
+          opacity: 0.4,
+        }}
+      />
     </AbsoluteFill>
   );
 };
 
-const TextLine: React.FC<{
-  window: FadeWindow;
-  frame: number;
-  children: React.ReactNode;
-}> = ({ window: w, frame, children }) => (
-  <div
-    style={{
-      position: "absolute",
-      opacity: opacityForWindow(frame, w),
-      transform: `translateY(${translateYForWindow(frame, w)}px)`,
-      fontFamily: fonts.serif,
-      fontWeight: 300,
-      lineHeight: 1.5,
-      color: colors.textPrimary,
-      maxWidth: "92%",
-      fontSize: 38,
-      letterSpacing: "0.01em",
-      textAlign: "center",
-    }}
-  >
-    {children}
+const ContextColumn: React.FC<{ letters: string[] }> = ({ letters }) => (
+  <div style={{ display: "flex", gap: 12, marginTop: 6 }}>
+    {letters.map((l, i) => (
+      <div
+        key={i}
+        style={{
+          fontSize: 26,
+          color: colors.textMuted,
+          fontFamily: fonts.serifLatin,
+        }}
+      >
+        {l}
+      </div>
+    ))}
+  </div>
+);
+
+const BaseLabel: React.FC<{
+  letter: string;
+  caption: string;
+  color: string;
+}> = ({ letter, caption, color }) => (
+  <div style={{ textAlign: "center", direction: "rtl" }}>
+    <div
+      style={{
+        fontSize: 40,
+        fontWeight: 400,
+        color,
+        fontFamily: fonts.serifLatin,
+        direction: "ltr",
+      }}
+    >
+      {letter}
+    </div>
+    <div
+      style={{
+        fontSize: 15,
+        color: colors.textSecondary,
+        letterSpacing: 1,
+        marginTop: 4,
+      }}
+    >
+      {caption}
+    </div>
   </div>
 );

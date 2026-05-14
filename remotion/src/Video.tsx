@@ -33,7 +33,10 @@ export const Video: React.FC<{ params: VUSVideoParams }> = ({ params }) => {
         from={at(sceneDurations.variantIntro)}
         durationInFrames={dur(sceneDurations.variantIntro)}
       >
-        <VariantIntro geneName={params.variant.geneName} />
+        <VariantIntro
+          geneName={params.variant.geneName}
+          notation={params.variant.notation}
+        />
       </Sequence>
       <Sequence
         from={at(sceneDurations.categories)}

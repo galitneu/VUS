@@ -37,7 +37,10 @@ export const RemotionRoot: React.FC = () => {
         fps={FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={{ geneName: CASE_COL4A2.variant.geneName }}
+        defaultProps={{
+          geneName: CASE_COL4A2.variant.geneName,
+          notation: CASE_COL4A2.variant.notation,
+        }}
       />
       <Composition
         id="Categories"
