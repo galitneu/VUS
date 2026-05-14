@@ -1,0 +1,73 @@
+name: Generate narration audio
+
+# Regenerates the Hebrew TTS narration MP3s whenever the narration source
+# changes, and commits them back so renders are never silent on a fresh
+# checkout. edge-tts needs network access to Microsoft's TTS service, which
+# GitHub-hosted runners have (the Claude Code sandbox does not).
+
+on:
+  push:
+    branches:
+      - main
+      - 'claude/**'
+    paths:
+      - 'remotion/src/narration/**'
+      - 'remotion/src/params/**'
+      - 'remotion/scripts/generate-audio.ts'
+  workflow_dispatch:
+    inputs:
+      case:
+        description: 'Variant case to generate audio for (col4a2, brpf1, vcl, fzd2)'
+        required: false
+        default: 'col4a2'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: narration-audio-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  generate-audio:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: remotion/package-lock.json
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install edge-tts
+        run: pip install edge-tts
+
+      - name: Install Node dependencies
+        working-directory: remotion
+        run: npm ci
+
+      - name: Generate narration audio
+        working-directory: remotion
+        run: npm run generate-audio -- --case "${{ github.event.inputs.case || 'col4a2' }}"
+
+      - name: Commit regenerated audio
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add remotion/public/audio/*.mp3
+          if git diff --staged --quiet; then
+            echo "Narration audio unchanged — nothing to commit."
+          else
+            git commit -m "chore: regenerate narration audio [skip ci]"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
