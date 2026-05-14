@@ -1,3 +1,6 @@
+import type { NarrationSet } from "../narration/texts";
+import { audioDurations } from "../narration/audio-durations";
+
 export const colors = {
   bgDeep: "#0a1729",
   bgMid: "#152540",
@@ -23,16 +26,19 @@ export const FPS = 30;
 export const VIDEO_WIDTH = 1920;
 export const VIDEO_HEIGHT = 1080;
 
-export const sceneDurations = {
-  opening: 15,
-  variantIntro: 25,
-  categories: 25,
-  notVUS: 20,
-  specificVariant: 40,
-  whyUncertain: 25,
-  timeline: 25,
-  closing: 15,
-} as const;
+// Design committee Q7: a beat of visual quiet after the narration ends,
+// before the transition to the next scene.
+export const REST_PERIOD_SECONDS = 2;
+
+// Architecture committee Q1/Q4: each scene's length is a *result* of its
+// narration length (measured post-TTS in audio-durations.ts), not a hardcoded
+// guess — narration + a rest period, rounded up to whole seconds.
+export const sceneDurations = Object.fromEntries(
+  (Object.keys(audioDurations) as (keyof NarrationSet)[]).map((scene) => [
+    scene,
+    Math.ceil(audioDurations[scene]) + REST_PERIOD_SECONDS,
+  ]),
+) as Record<keyof NarrationSet, number>;
 
 export const totalDurationSeconds = Object.values(sceneDurations).reduce(
   (a, b) => a + b,

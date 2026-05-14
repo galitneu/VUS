@@ -25,7 +25,9 @@ import { CASE_BRPF1 } from "../src/params/cases/brpf1";
 import { CASE_VCL } from "../src/params/cases/vcl";
 import { CASE_FZD2 } from "../src/params/cases/fzd2";
 import { buildNarration } from "../src/narration/texts";
+import { sceneFilenames } from "../src/narration/scenes";
 import type { VUSVideoParams } from "../src/params/types";
+import { writeAudioDurations } from "./lib/audio-durations";
 
 const VOICE = "he-IL-HilaNeural";
 const OUT_DIR = path.resolve(__dirname, "../public/audio");
@@ -95,17 +97,6 @@ const scenes = Object.entries(narration) as [
   string
 ][];
 
-const sceneFilenames: Record<keyof typeof narration, string> = {
-  opening: "opening",
-  variantIntro: "variant-intro",
-  categories: "categories",
-  notVUS: "not-vus",
-  specificVariant: "specific-variant",
-  whyUncertain: "why-uncertain",
-  timeline: "timeline",
-  closing: "closing",
-};
-
 console.log(`\nGenerating audio for case: ${caseKey.toUpperCase()}`);
 console.log(`Voice: ${VOICE}`);
 console.log(`Output: ${OUT_DIR}\n`);
@@ -114,4 +105,10 @@ for (const [scene, text] of scenes) {
   generate(sceneFilenames[scene], text);
 }
 
-console.log("\nDone. Run `npm run dev` to preview with audio.");
+console.log("\nMeasuring audio durations...");
+writeAudioDurations()
+  .then(() => console.log("\nDone. Run `npm run dev` to preview with audio."))
+  .catch((err) => {
+    console.error(err?.message ?? err);
+    process.exit(1);
+  });
