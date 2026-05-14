@@ -20,38 +20,23 @@ import {
   statSync,
 } from "fs";
 import path from "path";
-import { CASE_COL4A2 } from "../src/params/cases/mvp_col4a2";
-import { CASE_BRPF1 } from "../src/params/cases/brpf1";
-import { CASE_VCL } from "../src/params/cases/vcl";
-import { CASE_FZD2 } from "../src/params/cases/fzd2";
 import { buildNarration } from "../src/narration/texts";
 import { sceneFilenames } from "../src/narration/scenes";
-import type { VUSVideoParams } from "../src/params/types";
 import { writeAudioDurations } from "./lib/audio-durations";
+import { validateAudio } from "./lib/validate-audio";
+import { resolveCase } from "./lib/cases";
 
 const VOICE = "he-IL-HilaNeural";
 const OUT_DIR = path.resolve(__dirname, "../public/audio");
 
-const CASES: Record<string, VUSVideoParams> = {
-  col4a2: CASE_COL4A2,
-  brpf1: CASE_BRPF1,
-  vcl: CASE_VCL,
-  fzd2: CASE_FZD2,
-};
-
-// Parse --case argument (default: col4a2)
-const caseFlagIndex = process.argv.indexOf("--case");
-const caseArg =
-  process.argv.find((a) => a.startsWith("--case="))?.split("=")[1] ??
-  (caseFlagIndex !== -1 ? process.argv[caseFlagIndex + 1] : undefined);
-const caseKey = (caseArg ?? "col4a2").toLowerCase();
-const params = CASES[caseKey];
-if (!params) {
-  console.error(
-    `Unknown case "${caseKey}". Available: ${Object.keys(CASES).join(", ")}`
-  );
-  process.exit(1);
-}
+const { caseKey, params } = (() => {
+  try {
+    return resolveCase(process.argv);
+  } catch (err) {
+    console.error((err as Error).message);
+    process.exit(1);
+  }
+})();
 
 // Check edge-tts is installed
 try {
@@ -105,8 +90,9 @@ for (const [scene, text] of scenes) {
   generate(sceneFilenames[scene], text);
 }
 
-console.log("\nMeasuring audio durations...");
-writeAudioDurations()
+console.log("\nValidating and measuring audio...");
+validateAudio(narration)
+  .then(() => writeAudioDurations())
   .then(() => console.log("\nDone. Run `npm run dev` to preview with audio."))
   .catch((err) => {
     console.error(err?.message ?? err);

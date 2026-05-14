@@ -17,7 +17,8 @@
     "typecheck": "tsc",
     "check:blocks": "tsx scripts/check-blocks.ts",
     "generate-audio": "tsx scripts/generate-audio.ts",
-    "measure-audio": "tsx scripts/measure-audio.ts"
+    "measure-audio": "tsx scripts/measure-audio.ts",
+    "validate-audio": "tsx scripts/validate-audio.ts"
   },
   "keywords": [],
   "author": "",
