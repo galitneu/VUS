@@ -38,9 +38,10 @@ const CASES: Record<string, VUSVideoParams> = {
 };
 
 // Parse --case argument (default: col4a2)
+const caseFlagIndex = process.argv.indexOf("--case");
 const caseArg =
   process.argv.find((a) => a.startsWith("--case="))?.split("=")[1] ??
-  process.argv[process.argv.indexOf("--case") + 1];
+  (caseFlagIndex !== -1 ? process.argv[caseFlagIndex + 1] : undefined);
 const caseKey = (caseArg ?? "col4a2").toLowerCase();
 const params = CASES[caseKey];
 if (!params) {
