@@ -13,6 +13,8 @@ import {
   opacityForWindow,
   translateYForWindow,
   sec,
+  fadeIn,
+  fadeInOut,
 } from "../design/animations";
 
 const SEQUENCE = "ACGTAGCGCTAGCTGTAGCTAGCTGACGTACGTAGCT";
@@ -23,34 +25,11 @@ export const Opening: React.FC = () => {
   const { fps } = useVideoConfig();
   const s = (t: number) => sec(t, fps);
 
-  const sequenceFade: FadeWindow = {
-    fadeInStart: s(0.6),
-    fadeInEnd: s(1.8),
-  };
-
-  const topicLabelFade: FadeWindow = {
-    fadeInStart: s(0.3),
-    fadeInEnd: s(1.3),
-  };
-
-  const line1: FadeWindow = {
-    fadeInStart: s(2),
-    fadeInEnd: s(2.72),
-    fadeOutStart: s(5.28),
-    fadeOutEnd: s(6),
-  };
-
-  const line2: FadeWindow = {
-    fadeInStart: s(6),
-    fadeInEnd: s(6.72),
-    fadeOutStart: s(9.28),
-    fadeOutEnd: s(10),
-  };
-
-  const line3: FadeWindow = {
-    fadeInStart: s(10),
-    fadeInEnd: s(11.2),
-  };
+  const sequenceFade = fadeIn(0.6, "slow", fps);
+  const topicLabelFade = fadeIn(0.3, "slow", fps);
+  const line1 = fadeInOut(2, "medium", 5.28, "medium", fps);
+  const line2 = fadeInOut(6, "medium", 9.28, "medium", fps);
+  const line3 = fadeIn(10, "slow", fps);
 
   const pulseT = (Math.sin((frame / fps) * Math.PI * (2 / 3)) + 1) / 2;
   const glowBlur = 10 + pulseT * 22;

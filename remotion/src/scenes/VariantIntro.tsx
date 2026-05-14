@@ -11,7 +11,8 @@ import {
   type FadeWindow,
   opacityForWindow,
   translateYForWindow,
-  sec,
+  fadeIn,
+  fadeInOut,
 } from "../design/animations";
 import { ChromosomeBar } from "../components/ChromosomeBar";
 import { SequenceZoom } from "../components/SequenceZoom";
@@ -39,34 +40,20 @@ type Props = { geneName: string };
 export const VariantIntro: React.FC<Props> = ({ geneName }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const s = (t: number) => sec(t, fps);
 
-  const chromFade: FadeWindow = { fadeInStart: s(0.3), fadeInEnd: s(1.4) };
-  const chromLabelFade: FadeWindow = { fadeInStart: s(0.8), fadeInEnd: s(1.8) };
+  const chromFade = fadeIn(0.3, "slow", fps);
+  const chromLabelFade = fadeIn(0.8, "slow", fps);
 
-  const geneHighlightFade: FadeWindow = { fadeInStart: s(2.0), fadeInEnd: s(3.0) };
-  const pinFade: FadeWindow = { fadeInStart: s(2.6), fadeInEnd: s(3.6) };
+  const geneHighlightFade = fadeIn(2.0, "slow", fps);
+  const pinFade = fadeIn(2.6, "slow", fps);
 
-  const arrowFade: FadeWindow = { fadeInStart: s(4.2), fadeInEnd: s(5.2) };
-  const seqFade: FadeWindow = { fadeInStart: s(4.7), fadeInEnd: s(6.0) };
-  const variantLabelFade: FadeWindow = { fadeInStart: s(6.2), fadeInEnd: s(7.2) };
+  const arrowFade = fadeIn(4.2, "slow", fps);
+  const seqFade = fadeIn(4.7, "slow", fps);
+  const variantLabelFade = fadeIn(6.2, "slow", fps);
 
-  const line1: FadeWindow = {
-    fadeInStart: s(7),
-    fadeInEnd: s(7.7),
-    fadeOutStart: s(12.3),
-    fadeOutEnd: s(13),
-  };
-  const line2: FadeWindow = {
-    fadeInStart: s(13),
-    fadeInEnd: s(13.7),
-    fadeOutStart: s(18.3),
-    fadeOutEnd: s(19),
-  };
-  const line3: FadeWindow = {
-    fadeInStart: s(19),
-    fadeInEnd: s(19.9),
-  };
+  const line1 = fadeInOut(7, "medium", 12.3, "medium", fps);
+  const line2 = fadeInOut(13, "medium", 18.3, "medium", fps);
+  const line3 = fadeIn(19, "slow", fps);
 
   const pulseT = (Math.sin((frame / fps) * Math.PI * (2 / 3)) + 1) / 2;
   const pulseOpacity = 0.82 + pulseT * 0.18;

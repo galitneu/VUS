@@ -12,7 +12,7 @@ import {
   type FadeWindow,
   opacityForWindow,
   translateYForWindow,
-  sec,
+  fadeIn,
 } from "../design/animations";
 
 const BOX_W = 580;
@@ -29,12 +29,11 @@ type Card = { fade: FadeWindow; text: string };
 export const WhyUncertain: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const s = (t: number) => sec(t, fps);
 
-  const titleFade: FadeWindow = { fadeInStart: s(0.3), fadeInEnd: s(1.4) };
-  const card1Fade: FadeWindow = { fadeInStart: s(2.0), fadeInEnd: s(3.2) };
-  const card2Fade: FadeWindow = { fadeInStart: s(5.0), fadeInEnd: s(6.2) };
-  const finalFade: FadeWindow = { fadeInStart: s(18.0), fadeInEnd: s(19.2) };
+  const titleFade = fadeIn(0.3, "slow", fps);
+  const card1Fade = fadeIn(2.0, "slow", fps);
+  const card2Fade = fadeIn(5.0, "slow", fps);
+  const finalFade = fadeIn(18.0, "slow", fps);
 
   const cards: Card[] = [
     { fade: card1Fade, text: "תפקוד החלבון לא נבדק ישירות" },

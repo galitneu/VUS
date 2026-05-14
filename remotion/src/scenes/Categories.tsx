@@ -9,10 +9,9 @@ import {
 import { colors, fonts } from "../design/tokens";
 import { Ltr } from "../components/Ltr";
 import {
-  type FadeWindow,
   opacityForWindow,
   translateYForWindow,
-  sec,
+  fadeIn,
 } from "../design/animations";
 
 const BOX_WIDTH = 440;
@@ -68,17 +67,16 @@ const CATEGORIES: Category[] = [
 export const Categories: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const s = (t: number) => sec(t, fps);
 
-  const titleFade: FadeWindow = { fadeInStart: s(0.3), fadeInEnd: s(1.3) };
-  const subtitleFade: FadeWindow = { fadeInStart: s(0.7), fadeInEnd: s(1.6) };
-  const boxFades: FadeWindow[] = [
-    { fadeInStart: s(1.4), fadeInEnd: s(2.3) },
-    { fadeInStart: s(1.7), fadeInEnd: s(2.6) },
-    { fadeInStart: s(2.0), fadeInEnd: s(2.9) },
+  const titleFade = fadeIn(0.3, "slow", fps);
+  const subtitleFade = fadeIn(0.7, "slow", fps);
+  const boxFades = [
+    fadeIn(1.4, "slow", fps),
+    fadeIn(1.7, "slow", fps),
+    fadeIn(2.0, "slow", fps),
   ];
-  const arrowFade: FadeWindow = { fadeInStart: s(19), fadeInEnd: s(20) };
-  const finalLabelFade: FadeWindow = { fadeInStart: s(19.5), fadeInEnd: s(20.4) };
+  const arrowFade = fadeIn(19, "slow", fps);
+  const finalLabelFade = fadeIn(19.5, "slow", fps);
 
   const pulseT = (Math.sin((frame / fps) * Math.PI * (2 / 3)) + 1) / 2;
   const glowBlur = 22 + pulseT * 30;

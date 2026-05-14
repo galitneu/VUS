@@ -9,10 +9,9 @@ import {
 import { colors, fonts } from "../design/tokens";
 import { Ltr } from "../components/Ltr";
 import {
-  type FadeWindow,
   opacityForWindow,
   translateYForWindow,
-  sec,
+  fadeIn,
 } from "../design/animations";
 
 type Props = {
@@ -34,15 +33,14 @@ export const Timeline: React.FC<Props> = ({
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const s = (t: number) => sec(t, fps);
 
-  const titleFade: FadeWindow = { fadeInStart: s(0.3), fadeInEnd: s(1.4) };
-  const lineFade: FadeWindow = { fadeInStart: s(1.6), fadeInEnd: s(3.0) };
-  const node1Fade: FadeWindow = { fadeInStart: s(2.0), fadeInEnd: s(3.0) };
-  const node2Fade: FadeWindow = { fadeInStart: s(3.6), fadeInEnd: s(4.6) };
-  const node3Fade: FadeWindow = { fadeInStart: s(5.2), fadeInEnd: s(6.2) };
-  const captionFade: FadeWindow = { fadeInStart: s(17), fadeInEnd: s(18.4) };
-  const accessionFade: FadeWindow = { fadeInStart: s(18.5), fadeInEnd: s(19.6) };
+  const titleFade = fadeIn(0.3, "slow", fps);
+  const lineFade = fadeIn(1.6, "slow", fps);
+  const node1Fade = fadeIn(2.0, "slow", fps);
+  const node2Fade = fadeIn(3.6, "slow", fps);
+  const node3Fade = fadeIn(5.2, "slow", fps);
+  const captionFade = fadeIn(17, "slow", fps);
+  const accessionFade = fadeIn(18.5, "slow", fps);
 
   const node3PulseT =
     (Math.sin((frame / fps) * Math.PI * (2 / 3)) + 1) / 2;

@@ -11,7 +11,7 @@ import {
   type FadeWindow,
   opacityForWindow,
   translateYForWindow,
-  sec,
+  fadeIn,
 } from "../design/animations";
 
 const EQ_WIDTH = 620;
@@ -32,11 +32,10 @@ type EqDef = {
 export const NotVUS: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const s = (t: number) => sec(t, fps);
 
-  const eq1Fade: FadeWindow = { fadeInStart: s(0.4), fadeInEnd: s(1.2) };
-  const eq2Fade: FadeWindow = { fadeInStart: s(1.2), fadeInEnd: s(2.0) };
-  const clarifyFade: FadeWindow = { fadeInStart: s(5.5), fadeInEnd: s(6.7) };
+  const eq1Fade = fadeIn(0.4, "medium", fps);
+  const eq2Fade = fadeIn(1.2, "medium", fps);
+  const clarifyFade = fadeIn(5.5, "slow", fps);
 
   const eqs: EqDef[] = [
     {

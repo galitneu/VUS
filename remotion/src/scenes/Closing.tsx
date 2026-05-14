@@ -9,21 +9,19 @@ import {
 import { colors, fonts } from "../design/tokens";
 import { Ltr } from "../components/Ltr";
 import {
-  type FadeWindow,
   opacityForWindow,
   translateYForWindow,
-  sec,
+  fadeIn,
 } from "../design/animations";
 
 export const Closing: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const s = (t: number) => sec(t, fps);
 
-  const line1Fade: FadeWindow = { fadeInStart: s(0.3), fadeInEnd: s(1.4) };
-  const ruleFade: FadeWindow = { fadeInStart: s(2.0), fadeInEnd: s(2.8) };
-  const line2Fade: FadeWindow = { fadeInStart: s(3.0), fadeInEnd: s(4.0) };
-  const line3Fade: FadeWindow = { fadeInStart: s(7.0), fadeInEnd: s(8.2) };
+  const line1Fade = fadeIn(0.3, "slow", fps);
+  const ruleFade = fadeIn(2.0, "medium", fps);
+  const line2Fade = fadeIn(3.0, "slow", fps);
+  const line3Fade = fadeIn(7.0, "slow", fps);
 
   return (
     <AbsoluteFill

@@ -53,3 +53,32 @@ export const translateYForWindow = (
 };
 
 export const sec = (s: number, fps: number) => s * fps;
+
+// Design committee Q7: motion uses exactly three transition durations, paired
+// with the single easing curve above. Everything that fades or moves picks one.
+export const MOTION_SECONDS = { fast: 0.3, medium: 0.6, slow: 1.2 } as const;
+export type MotionDuration = keyof typeof MOTION_SECONDS;
+
+/** A fade-in window starting at startSec, lasting one motion duration. */
+export const fadeIn = (
+  startSec: number,
+  duration: MotionDuration,
+  fps: number,
+): FadeWindow => ({
+  fadeInStart: sec(startSec, fps),
+  fadeInEnd: sec(startSec + MOTION_SECONDS[duration], fps),
+});
+
+/** A fade-in and a later fade-out, each lasting one motion duration. */
+export const fadeInOut = (
+  inStartSec: number,
+  inDuration: MotionDuration,
+  outStartSec: number,
+  outDuration: MotionDuration,
+  fps: number,
+): FadeWindow => ({
+  fadeInStart: sec(inStartSec, fps),
+  fadeInEnd: sec(inStartSec + MOTION_SECONDS[inDuration], fps),
+  fadeOutStart: sec(outStartSec, fps),
+  fadeOutEnd: sec(outStartSec + MOTION_SECONDS[outDuration], fps),
+});
