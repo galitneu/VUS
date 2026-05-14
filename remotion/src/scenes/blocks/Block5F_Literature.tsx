@@ -1,6 +1,7 @@
 import React from "react";
 import { interpolate, Easing } from "remotion";
 import { colors, fonts } from "../../design/tokens";
+import { Ltr } from "../../components/Ltr";
 import { BlockKicker } from "./BlockKicker";
 import { BlockCaption } from "./BlockCaption";
 import type { BlockProps } from "./types";
@@ -92,12 +93,7 @@ export const Block5F_Literature: React.FC<Props> = ({
       <div style={{ opacity: captionOp }}>
         <BlockCaption fontSize={26}>
           וריאנטים בגן{" "}
-          <span
-            dir="ltr"
-            style={{ unicodeBidi: "embed", color: colors.accent }}
-          >
-            {geneName}
-          </span>{" "}
+          <Ltr style={{ color: colors.accent }}>{geneName}</Ltr>{" "}
           תוארו בספרות המדעית בהקשר של {literatureContext}.
           {isAdultOnset && (
             <>

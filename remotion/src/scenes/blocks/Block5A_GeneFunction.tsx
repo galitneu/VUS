@@ -1,6 +1,7 @@
 import React from "react";
 import { interpolate, Easing } from "remotion";
 import { colors, fonts } from "../../design/tokens";
+import { Ltr } from "../../components/Ltr";
 import type { GeneType } from "../../params/types";
 import { analogyFor } from "../../params/geneTypeAnalogy";
 import { BlockKicker } from "./BlockKicker";
@@ -86,9 +87,7 @@ export const Block5A_GeneFunction: React.FC<Props> = ({
       <div style={{ opacity: captionOp }}>
         <BlockCaption>
           הגן{" "}
-          <span dir="ltr" style={{ unicodeBidi: "embed", color: colors.accent }}>
-            {geneName}
-          </span>{" "}
+          <Ltr style={{ color: colors.accent }}>{geneName}</Ltr>{" "}
           מכיל הוראות לייצור {analogy}.
         </BlockCaption>
       </div>

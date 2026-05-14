@@ -1,6 +1,7 @@
 import React from "react";
 import { interpolate, Easing } from "remotion";
 import { colors, fonts } from "../../design/tokens";
+import { Ltr } from "../../components/Ltr";
 import { BlockKicker } from "./BlockKicker";
 import { BlockCaption } from "./BlockCaption";
 import type { BlockProps } from "./types";
@@ -97,17 +98,13 @@ export const Block5D4_LOFTolerant: React.FC<BlockProps> = ({
         }}
       >
         אך גן זה סובלני לוריאנטים מסוג{" "}
-        <span dir="ltr" style={{ unicodeBidi: "embed" }}>
-          LoF
-        </span>
+        <Ltr>LoF</Ltr>
       </div>
 
       <div style={{ opacity: captionOp }}>
         <BlockCaption fontSize={24}>
           וריאנטים מסוג{" "}
-          <span dir="ltr" style={{ unicodeBidi: "embed" }}>
-            loss-of-function
-          </span>{" "}
+          <Ltr>loss-of-function</Ltr>{" "}
           אינם נדירים בגן זה — הם מצויים גם אצל אנשים בריאים. לכן, היעדרות ממאגרי
           מידע אינה מעידה בהכרח על חומרה קלינית.
         </BlockCaption>

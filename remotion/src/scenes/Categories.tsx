@@ -7,6 +7,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { colors, fonts } from "../design/tokens";
+import { Ltr } from "../components/Ltr";
 import {
   type FadeWindow,
   opacityForWindow,
@@ -180,7 +181,7 @@ export const Categories: React.FC = () => {
             >
               <div
                 style={{
-                  fontFamily: fonts.sans,
+                  fontFamily: fonts.sansLatin,
                   fontSize: 34,
                   fontWeight: 400,
                   color: cat.textColor,
@@ -256,17 +257,15 @@ export const Categories: React.FC = () => {
         }}
       >
         הוריאנט בבדיקה מסווג כ-
-        <span
-          dir="ltr"
+        <Ltr
           style={{
-            unicodeBidi: "embed",
             color: colors.accent,
             fontWeight: 400,
             letterSpacing: 2,
           }}
         >
           VUS
-        </span>
+        </Ltr>
       </div>
     </AbsoluteFill>
   );

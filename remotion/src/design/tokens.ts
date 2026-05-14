@@ -20,6 +20,9 @@ export const colors = {
 export const fonts = {
   serif: "'Frank Ruhl Libre', serif",
   sans: "'Heebo', sans-serif",
+  // Latin-first stacks for text wrapped in dir="ltr" (design committee Q6).
+  serifLatin: "'Cormorant Garamond', 'Frank Ruhl Libre', serif",
+  sansLatin: "'Inter', 'Heebo', sans-serif",
 } as const;
 
 export const FPS = 30;

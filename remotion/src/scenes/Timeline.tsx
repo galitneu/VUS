@@ -7,6 +7,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { colors, fonts } from "../design/tokens";
+import { Ltr } from "../components/Ltr";
 import {
   type FadeWindow,
   opacityForWindow,
@@ -192,6 +193,7 @@ export const Timeline: React.FC<Props> = ({
                         direction: "ltr",
                         unicodeBidi: "embed",
                         letterSpacing: 2,
+                        fontFamily: fonts.sansLatin,
                       }
                     : {}),
                 }}
@@ -224,12 +226,7 @@ export const Timeline: React.FC<Props> = ({
         {inClinvar ? (
           <>
             הוריאנט רשום במאגר{" "}
-            <span
-              dir="ltr"
-              style={{ unicodeBidi: "embed", color: colors.accent }}
-            >
-              ClinVar
-            </span>{" "}
+            <Ltr style={{ color: colors.accent }}>ClinVar</Ltr>{" "}
             הציבורי — ייתכן שיתעדכן ככל שמתווסף מידע חדש.
           </>
         ) : (

@@ -7,6 +7,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { colors, fonts } from "../design/tokens";
+import { Ltr } from "../components/Ltr";
 import {
   type FadeWindow,
   opacityForWindow,
@@ -161,17 +162,15 @@ export const WhyUncertain: React.FC = () => {
         }}
       >
         עד שהראיות נאספות — הסיווג נשאר{" "}
-        <span
-          dir="ltr"
+        <Ltr
           style={{
-            unicodeBidi: "embed",
             color: colors.accent,
             fontWeight: 400,
             letterSpacing: 2,
           }}
         >
           VUS
-        </span>
+        </Ltr>
       </div>
     </AbsoluteFill>
   );

@@ -105,7 +105,7 @@ export const NotVUS: React.FC = () => {
               display: "flex",
               alignItems: "center",
               gap: 26,
-              fontFamily: fonts.serif,
+              fontFamily: fonts.serifLatin,
             }}
           >
             <span

@@ -24,8 +24,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.2.11",
     "@fontsource/frank-ruhl-libre": "^5.2.8",
     "@fontsource/heebo": "^5.2.8",
+    "@fontsource/inter": "^5.2.8",
     "@remotion/bundler": "^4.0.460",
     "@remotion/cli": "^4.0.460",
     "@remotion/google-fonts": "^4.0.460",

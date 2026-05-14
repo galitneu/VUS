@@ -7,6 +7,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { colors, fonts } from "../design/tokens";
+import { Ltr } from "../components/Ltr";
 import {
   type FadeWindow,
   opacityForWindow,
@@ -65,17 +66,15 @@ export const Closing: React.FC = () => {
           direction: "rtl",
         }}
       >
-        <span
-          dir="ltr"
+        <Ltr
           style={{
-            unicodeBidi: "embed",
             color: colors.accent,
             fontWeight: 400,
             letterSpacing: 3,
           }}
         >
           VUS
-        </span>{" "}
+        </Ltr>{" "}
         אינו תשובה סופית
       </div>
 
