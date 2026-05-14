@@ -3,4 +3,3 @@ out/
 !out/video.mp4
 .remotion/
 *.log
-public/audio/*.mp3
