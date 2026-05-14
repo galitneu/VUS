@@ -25,8 +25,9 @@ import { sceneFilenames } from "../src/narration/scenes";
 import { writeAudioDurations } from "./lib/audio-durations";
 import { validateAudio } from "./lib/validate-audio";
 import { resolveCase } from "./lib/cases";
+import { VERSIONS } from "../src/version";
 
-const VOICE = "he-IL-HilaNeural";
+const VOICE = VERSIONS.ttsVoice;
 const OUT_DIR = path.resolve(__dirname, "../public/audio");
 
 const { caseKey, params } = (() => {
