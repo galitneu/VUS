@@ -78,6 +78,12 @@ function generate(name: string, text: string): void {
     );
     const size = Math.round(statSync(outFile).size / 1024);
     console.log(`    ✓ ${outFile} (${size} KB)`);
+  } catch (err) {
+    // edge-tts creates the output file before streaming audio into it, so a
+    // failed run leaves a 0-byte .mp3 behind. Remove it so it can't be
+    // committed as a silent track.
+    if (existsSync(outFile) && statSync(outFile).size === 0) unlinkSync(outFile);
+    throw err;
   } finally {
     if (existsSync(tmpFile)) unlinkSync(tmpFile);
   }
