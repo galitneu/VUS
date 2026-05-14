@@ -41,9 +41,9 @@ const CATEGORIES: Category[] = [
     label: "Pathogenic",
     hebrew: "פתוגני",
     sub: "גורם למחלה",
-    borderColor: colors.red,
-    bgColor: colors.redSoft,
-    textColor: colors.red,
+    borderColor: colors.pathogenic,
+    bgColor: colors.pathogenicSoft,
+    textColor: colors.pathogenic,
   },
   {
     label: "VUS",
@@ -58,9 +58,9 @@ const CATEGORIES: Category[] = [
     label: "Benign",
     hebrew: "שפיר",
     sub: "אינו גורם למחלה",
-    borderColor: colors.green,
-    bgColor: colors.greenSoft,
-    textColor: colors.green,
+    borderColor: colors.benign,
+    bgColor: colors.benignSoft,
+    textColor: colors.benign,
   },
 ];
 

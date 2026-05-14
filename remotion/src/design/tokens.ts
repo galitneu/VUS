@@ -2,8 +2,8 @@ import type { NarrationSet } from "../narration/texts";
 import { audioDurations } from "../narration/audio-durations";
 
 export const colors = {
-  bgDeep: "#0a1729",
-  bgMid: "#152540",
+  bgDeep: "#0c1a2f",
+  bgMid: "#1a2b45",
   bgDarker: "#050d18",
   textPrimary: "#f4ede3",
   textSecondary: "#8ba4be",
@@ -11,10 +11,12 @@ export const colors = {
   accent: "#d4a574",
   accentSoft: "rgba(212, 165, 116, 0.18)",
   accentGlow: "rgba(212, 165, 116, 0.35)",
-  green: "#6ebe8c",
-  greenSoft: "rgba(110, 190, 140, 0.15)",
-  red: "#d2645a",
-  redSoft: "rgba(210, 100, 90, 0.15)",
+  // Classification poles — deliberately not red/green: avoids the red-green
+  // colorblind clash, and the good/bad framing the video works against.
+  benign: "#7ba88f",
+  benignSoft: "rgba(123, 168, 143, 0.15)",
+  pathogenic: "#8a7fb0",
+  pathogenicSoft: "rgba(138, 127, 176, 0.15)",
 } as const;
 
 export const fonts = {

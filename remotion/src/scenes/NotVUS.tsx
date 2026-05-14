@@ -41,15 +41,15 @@ export const NotVUS: React.FC = () => {
     {
       fade: eq1Fade,
       hebrew: "מסוכן",
-      border: colors.red,
-      bg: colors.redSoft,
+      border: colors.pathogenic,
+      bg: colors.pathogenicSoft,
       y: Y_EQ1,
     },
     {
       fade: eq2Fade,
       hebrew: "בטוח",
-      border: colors.green,
-      bg: colors.greenSoft,
+      border: colors.benign,
+      bg: colors.benignSoft,
       y: Y_EQ2,
     },
   ];

@@ -62,7 +62,7 @@ export const Timeline: React.FC<Props> = ({
     {
       label: "עדכון סיווג אפשרי",
       sublabel: "?",
-      color: colors.green,
+      color: colors.benign,
       fade: node3Fade,
       pulsing: true,
     },
@@ -129,7 +129,7 @@ export const Timeline: React.FC<Props> = ({
             left: `${POSITIONS[2]}%`,
             width: `${POSITIONS[0] - POSITIONS[2]}%`,
             height: 1.5,
-            background: `linear-gradient(90deg, ${colors.green} 0%, ${colors.textSecondary} 50%, ${colors.accent} 100%)`,
+            background: `linear-gradient(90deg, ${colors.benign} 0%, ${colors.textSecondary} 50%, ${colors.accent} 100%)`,
             opacity: lineOp * 0.6,
           }}
         />
