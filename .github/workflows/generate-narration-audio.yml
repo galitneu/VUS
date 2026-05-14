@@ -17,9 +17,9 @@ on:
   workflow_dispatch:
     inputs:
       case:
-        description: 'Variant case to generate audio for (col4a2, brpf1, vcl, fzd2)'
+        description: 'Variant case override (col4a2, brpf1, vcl, fzd2). Leave blank to use the repo default (src/params/currentCase.ts).'
         required: false
-        default: 'col4a2'
+        default: ''
 
 permissions:
   contents: write
@@ -58,7 +58,8 @@ jobs:
 
       - name: Generate narration audio
         working-directory: remotion
-        run: npm run generate-audio -- --case "${{ github.event.inputs.case || 'col4a2' }}"
+        # Empty --case falls back to the repo default (src/params/currentCase.ts).
+        run: npm run generate-audio -- --case "${{ github.event.inputs.case || '' }}"
 
       - name: Commit regenerated audio
         run: |

@@ -9,7 +9,7 @@ import { WhyUncertain } from "./scenes/WhyUncertain";
 import { Timeline } from "./scenes/Timeline";
 import { Closing } from "./scenes/Closing";
 import { Video } from "./Video";
-import { CASE_COL4A2 } from "./params/cases/mvp_col4a2";
+import { CURRENT_CASE } from "./params/currentCase";
 import {
   FPS,
   VIDEO_WIDTH,
@@ -38,8 +38,8 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         defaultProps={{
-          geneName: CASE_COL4A2.variant.geneName,
-          notation: CASE_COL4A2.variant.notation,
+          geneName: CURRENT_CASE.variant.geneName,
+          notation: CURRENT_CASE.variant.notation,
         }}
       />
       <Composition
@@ -65,7 +65,7 @@ export const RemotionRoot: React.FC = () => {
         fps={FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={{ params: CASE_COL4A2 }}
+        defaultProps={{ params: CURRENT_CASE }}
       />
       <Composition
         id="WhyUncertain"
@@ -83,8 +83,8 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         defaultProps={{
-          inClinvar: CASE_COL4A2.variant.inClinvar,
-          clinvarAccession: CASE_COL4A2.variant.clinvarAccession,
+          inClinvar: CURRENT_CASE.variant.inClinvar,
+          clinvarAccession: CURRENT_CASE.variant.clinvarAccession,
         }}
       />
       <Composition
@@ -102,7 +102,7 @@ export const RemotionRoot: React.FC = () => {
         fps={FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={{ params: CASE_COL4A2 }}
+        defaultProps={{ params: CURRENT_CASE }}
       />
     </>
   );

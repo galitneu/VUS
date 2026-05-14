@@ -1,5 +1,6 @@
 import type { VUSVideoParams } from "../params/types";
 import { buildScene5Blocks } from "../params/buildScene5Blocks";
+import { parseBases } from "../params/notation";
 
 export type NarrationSet = {
   opening: string;
@@ -14,6 +15,7 @@ export type NarrationSet = {
 
 export function buildNarration(params: VUSVideoParams): NarrationSet {
   const { geneName } = params.variant;
+  const [origBase, varBase] = parseBases(params.variant.notation);
   const blocks = buildScene5Blocks(params);
 
   return {
@@ -23,11 +25,12 @@ export function buildNarration(params: VUSVideoParams): NarrationSet {
       "סרטון זה יסביר מה משמעות הסיווג, ומה ידוע על הוריאנט הספציפי שנמצא בבדיקה.",
 
     variantIntro:
-      `בבדיקה הגנטית נמצא שינוי בגן ${geneName}. ` +
-      "גן הוא קטע בכרומוזום שמכיל הוראות לבניית חלבון. " +
-      "וריאנט הוא שינוי בודד באחת מהאותיות הגנטיות בתוך הגן. " +
-      "מרבית הוריאנטים אינם משפיעים על הבריאות — אך מיעוטם עשוי להשפיע. " +
-      "לכן נדרש בירור נוסף.",
+      "כרומוזום הוא מבנה שנמצא בכל תא בגוף ומכיל חלק מהמידע הגנטי. " +
+      `הגן ${geneName} — זה שנמצא בבדיקה — יושב בנקודה ספציפית על אחד מהכרומוזומים. ` +
+      "הגן עצמו בנוי מסליל של אותיות גנטיות — A, T, G ו-C. " +
+      "הסדר המדויק של האותיות הוא ההוראה: ממנו הגוף קורא כיצד לבנות חלבון. " +
+      `הבדיקה זיהתה שינוי בנקודה ספציפית ברצף הגן: האות ${origBase} הוחלפה ב-${varBase}. ` +
+      "זו האות שנמצאת במוקד.",
 
     categories:
       "כל וריאנט גנטי מקבל סיווג לפי כללים מקצועיים בינלאומיים. " +

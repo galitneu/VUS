@@ -10,6 +10,7 @@ import {
 import { ThreeCanvas } from "@remotion/three";
 import { colors, fonts } from "../design/tokens";
 import { Ltr } from "../components/Ltr";
+import { parseBases } from "../params/notation";
 import { Scene3D } from "./gene-scene/Scene3D";
 import {
   getStageState,
@@ -21,12 +22,6 @@ import {
 type Props = { geneName: string; notation?: string };
 
 const GENE_CLAUSE_AT = 2.2; // seconds into stage 0 — spec committee rule
-
-// "c.2552G>T (p.Gly851Val)" -> ["G", "T"]; falls back to the spec defaults.
-const parseBases = (notation?: string): [string, string] => {
-  const m = notation?.match(/([ACGT])>([ACGT])/);
-  return m ? [m[1], m[2]] : ["G", "T"];
-};
 
 /** Which stage's narration to show — switches at the transition midpoint. */
 const narrationStageOf = (s: StageState): 0 | 1 | 2 =>
