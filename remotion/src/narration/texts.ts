@@ -4,7 +4,9 @@ import { parseBases } from "../params/notation";
 
 export type NarrationSet = {
   opening: string;
-  variantIntro: string;
+  variantIntroChrom: string;
+  variantIntroHelix: string;
+  variantIntroBase: string;
   categories: string;
   notVUS: string;
   specificVariant: string;
@@ -24,11 +26,15 @@ export function buildNarration(params: VUSVideoParams): NarrationSet {
       "תוצאה זו אינה תשובה ברורה לכאן או לכאן — היא מציגה תמונה מורכבת. " +
       "סרטון זה יסביר מה משמעות הסיווג, ומה ידוע על הוריאנט הספציפי שנמצא בבדיקה.",
 
-    variantIntro:
+    variantIntroChrom:
       "כרומוזום הוא מבנה שנמצא בכל תא בגוף ומכיל חלק מהמידע הגנטי. " +
-      `הגן ${geneName} — זה שנמצא בבדיקה — יושב בנקודה ספציפית על אחד מהכרומוזומים. ` +
+      `הגן ${geneName} — זה שנמצא בבדיקה — יושב בנקודה ספציפית על אחד מהכרומוזומים.`,
+
+    variantIntroHelix:
       "הגן עצמו בנוי מסליל של אותיות גנטיות — A, T, G ו-C. " +
-      "הסדר המדויק של האותיות הוא ההוראה: ממנו הגוף קורא כיצד לבנות חלבון. " +
+      "הסדר המדויק של האותיות הוא ההוראה: ממנו הגוף קורא כיצד לבנות חלבון.",
+
+    variantIntroBase:
       `הבדיקה זיהתה שינוי בנקודה ספציפית ברצף הגן: האות ${origBase} הוחלפה ב-${varBase}. ` +
       "זו האות שנמצאת במוקד.",
 

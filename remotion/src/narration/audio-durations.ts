@@ -6,7 +6,9 @@ import type { NarrationSet } from "./texts";
 
 export const audioDurations: Record<keyof NarrationSet, number> = {
   opening: 17.06,
-  variantIntro: 30.38,
+  variantIntroChrom: 14,
+  variantIntroHelix: 10,
+  variantIntroBase: 8,
   categories: 23.95,
   notVUS: 16.82,
   specificVariant: 34.51,

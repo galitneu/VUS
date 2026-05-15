@@ -39,7 +39,9 @@ const META_OUT = path.join(OUT_DIR, "video.meta.json");
 /** Composition id (registered in Root.tsx) for each narration scene key. */
 const SCENE_COMPOSITIONS: Record<SceneKey, string> = {
   opening: "Opening",
-  variantIntro: "VariantIntro",
+  variantIntroChrom: "VariantIntroChrom",
+  variantIntroHelix: "VariantIntroHelix",
+  variantIntroBase: "VariantIntroBase",
   categories: "Categories",
   notVUS: "NotVUS",
   specificVariant: "SpecificVariant",
@@ -52,7 +54,9 @@ const SCENE_COMPOSITIONS: Record<SceneKey, string> = {
 // produces the right film.
 const SCENE_ORDER: SceneKey[] = [
   "opening",
-  "variantIntro",
+  "variantIntroChrom",
+  "variantIntroHelix",
+  "variantIntroBase",
   "categories",
   "notVUS",
   "specificVariant",
@@ -77,10 +81,36 @@ type SceneSpec = { paths: string[]; useParams: boolean };
 /** Per-scene inputs + whether the visual reads case params. */
 const SCENE_SPECS: Record<SceneKey, SceneSpec> = {
   opening: { paths: ["src/scenes/Opening.tsx"], useParams: false },
-  variantIntro: {
+  // The gene scene is split into three sub-scenes. Each lists only the
+  // gene-scene files it actually uses, so a tweak to (say) Chromosome.tsx
+  // doesn't invalidate the helix sub-scene's cache.
+  variantIntroChrom: {
     paths: [
-      "src/scenes/VariantIntro.tsx",
-      "src/scenes/gene-scene",
+      "src/scenes/VariantIntroChrom.tsx",
+      "src/scenes/gene-scene/Chromosome.tsx",
+      "src/scenes/gene-scene/StageRig.tsx",
+      "src/scenes/gene-scene/Overlays.tsx",
+      "src/scenes/gene-scene/rig.ts",
+    ],
+    useParams: true,
+  },
+  variantIntroHelix: {
+    paths: [
+      "src/scenes/VariantIntroHelix.tsx",
+      "src/scenes/gene-scene/Helix.tsx",
+      "src/scenes/gene-scene/StageRig.tsx",
+      "src/scenes/gene-scene/Overlays.tsx",
+      "src/scenes/gene-scene/rig.ts",
+    ],
+    useParams: false, // constant — narration and visuals identical across cases
+  },
+  variantIntroBase: {
+    paths: [
+      "src/scenes/VariantIntroBase.tsx",
+      "src/scenes/gene-scene/BasePair.tsx",
+      "src/scenes/gene-scene/StageRig.tsx",
+      "src/scenes/gene-scene/Overlays.tsx",
+      "src/scenes/gene-scene/rig.ts",
       "src/params/notation.ts",
     ],
     useParams: true,

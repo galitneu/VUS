@@ -1,22 +1,15 @@
 import React, { useMemo } from "react";
 import { PerspectiveCamera } from "three";
 import { useThree } from "@react-three/fiber";
-import { useCurrentFrame, useVideoConfig } from "remotion";
-import {
-  getCameraTarget,
-  getStageState,
-  getStageVisibility,
-  PALETTE,
-} from "./rig";
-import { Chromosome } from "./Chromosome";
-import { Helix } from "./Helix";
-import { BasePair } from "./BasePair";
+import { CAM, PALETTE } from "./rig";
 
 const FOV = 46;
 
-const CameraRig: React.FC<{
-  pos: [number, number, number];
-  look: [number, number, number];
+type StageKey = "stage0" | "stage1" | "stage2";
+
+const CameraSet: React.FC<{
+  pos: readonly [number, number, number];
+  look: readonly [number, number, number];
 }> = ({ pos, look }) => {
   const camera = useThree((s) => s.camera);
   camera.position.set(pos[0], pos[1], pos[2]);
@@ -64,27 +57,24 @@ const Particles: React.FC = () => {
   );
 };
 
-/** The r3f scene graph: camera, lights, particles, and the three stages. */
-export const Scene3D: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
-  const timeSec = frame / fps;
-  const totalSec = durationInFrames / fps;
-
-  const state = getStageState(timeSec, totalSec);
-  const cam = getCameraTarget(state);
-  const vis = getStageVisibility(state);
-
-  // Accent light orbits the chromosome during stage 0 (spec section 5.8).
-  const accentAngle = timeSec * 0.5;
-
+/**
+ * Common 3D scaffolding for every gene sub-scene: fog, fixed camera, lighting,
+ * and the background star field. Wrap your stage geometry in this.
+ */
+export const StageRig: React.FC<{
+  camera: StageKey;
+  time: number;
+  children: React.ReactNode;
+}> = ({ camera, time, children }) => {
+  const cam = CAM[camera];
+  // Accent point light orbits the stage (spec section 5.8).
+  const accentAngle = time * 0.5;
   return (
     <>
       <fogExp2 attach="fog" args={[PALETTE.bg, 0.038]} />
-      <CameraRig pos={cam.pos} look={cam.look} />
+      <CameraSet pos={cam.pos} look={cam.look} />
 
-      {/* Calm, mostly-neutral lighting — the committee palette is muted, so
-          the spec's saturated blue lights are toned down here. */}
+      {/* Calm, mostly-neutral lighting tuned for the committee's muted palette. */}
       <ambientLight color="#26344a" intensity={2.3} />
       <directionalLight color="#9fb2c8" intensity={1.7} position={[3, 4, 5]} />
       <pointLight
@@ -106,21 +96,7 @@ export const Scene3D: React.FC = () => {
       />
 
       <Particles />
-      <Chromosome
-        visible={vis.chromVisible}
-        scale={vis.chromScale}
-        time={timeSec}
-      />
-      <Helix
-        visible={vis.helixVisible}
-        scale={vis.helixScale}
-        time={timeSec}
-      />
-      <BasePair
-        visible={vis.bpVisible}
-        scale={vis.bpScale}
-        time={timeSec}
-      />
+      {children}
     </>
   );
 };

@@ -3,7 +3,9 @@ import { AbsoluteFill, Sequence } from "remotion";
 import type { VUSVideoParams } from "./params/types";
 import { FPS, sceneDurations } from "./design/tokens";
 import { Opening } from "./scenes/Opening";
-import { VariantIntro } from "./scenes/VariantIntro";
+import { VariantIntroChrom } from "./scenes/VariantIntroChrom";
+import { VariantIntroHelix } from "./scenes/VariantIntroHelix";
+import { VariantIntroBase } from "./scenes/VariantIntroBase";
 import { Categories } from "./scenes/Categories";
 import { NotVUS } from "./scenes/NotVUS";
 import { SpecificVariant } from "./scenes/SpecificVariant";
@@ -30,13 +32,22 @@ export const Video: React.FC<{ params: VUSVideoParams }> = ({ params }) => {
         <Opening />
       </Sequence>
       <Sequence
-        from={at(sceneDurations.variantIntro)}
-        durationInFrames={dur(sceneDurations.variantIntro)}
+        from={at(sceneDurations.variantIntroChrom)}
+        durationInFrames={dur(sceneDurations.variantIntroChrom)}
       >
-        <VariantIntro
-          geneName={params.variant.geneName}
-          notation={params.variant.notation}
-        />
+        <VariantIntroChrom geneName={params.variant.geneName} />
+      </Sequence>
+      <Sequence
+        from={at(sceneDurations.variantIntroHelix)}
+        durationInFrames={dur(sceneDurations.variantIntroHelix)}
+      >
+        <VariantIntroHelix />
+      </Sequence>
+      <Sequence
+        from={at(sceneDurations.variantIntroBase)}
+        durationInFrames={dur(sceneDurations.variantIntroBase)}
+      >
+        <VariantIntroBase notation={params.variant.notation} />
       </Sequence>
       <Sequence
         from={at(sceneDurations.categories)}

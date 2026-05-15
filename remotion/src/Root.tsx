@@ -1,7 +1,9 @@
 import React from "react";
 import { Composition } from "remotion";
 import { Opening } from "./scenes/Opening";
-import { VariantIntro } from "./scenes/VariantIntro";
+import { VariantIntroChrom } from "./scenes/VariantIntroChrom";
+import { VariantIntroHelix } from "./scenes/VariantIntroHelix";
+import { VariantIntroBase } from "./scenes/VariantIntroBase";
 import { Categories } from "./scenes/Categories";
 import { NotVUS } from "./scenes/NotVUS";
 import { SpecificVariant } from "./scenes/SpecificVariant";
@@ -31,16 +33,30 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
       />
       <Composition
-        id="VariantIntro"
-        component={VariantIntro}
-        durationInFrames={Math.round(sceneDurations.variantIntro * FPS)}
+        id="VariantIntroChrom"
+        component={VariantIntroChrom}
+        durationInFrames={Math.round(sceneDurations.variantIntroChrom * FPS)}
         fps={FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={{
-          geneName: CURRENT_CASE.variant.geneName,
-          notation: CURRENT_CASE.variant.notation,
-        }}
+        defaultProps={{ geneName: CURRENT_CASE.variant.geneName }}
+      />
+      <Composition
+        id="VariantIntroHelix"
+        component={VariantIntroHelix}
+        durationInFrames={Math.round(sceneDurations.variantIntroHelix * FPS)}
+        fps={FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
+      <Composition
+        id="VariantIntroBase"
+        component={VariantIntroBase}
+        durationInFrames={Math.round(sceneDurations.variantIntroBase * FPS)}
+        fps={FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={{ notation: CURRENT_CASE.variant.notation }}
       />
       <Composition
         id="Categories"
