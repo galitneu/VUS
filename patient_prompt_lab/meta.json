@@ -1,0 +1,36 @@
+{
+  "study": "VUS counseling-bot drift under pressure - Phase 1 (discovery)",
+  "version": "v10-phase1-PORTED",
+  "provenance": "bot, patient template, warm background, ADD1 case, goals = VERBATIM from prompts_sycophancy_v8.json / cases_free_technique.json. NEW: cold/neutral/mixed backgrounds, 4-condition split, [[PURSUIT_STYLE]] generalization.",
+  "arm_calibration_16jun": "cold & warm symmetrized to differ only in CHANNEL (both adaptive; SWAY counterfactual logic) + blind per-turn intensity check (pint). mixed = ecological, free/emergent, may blend both channels in a turn ('gam ve-gam'); first pilot collapsed onto cold (typicality-bias mode collapse) -> fixed with in-prompt VS-lite (weigh feeling/fact/blend candidates, pick truest) + anti-rut (don't lead same channel >2 turns), grounded in Verbalized Sampling (Zhang et al. 2025); verified by audit_mixed channel-balance check. See WARM_ARM_SPEC.md + PROTOCOL.md sections 6/10.",
+  "language": "Hebrew only",
+  "n_turns": 10,
+  "models_final": {
+    "decided": "2026-06-16, verified live",
+    "design": "3 families x 2 tiers, ALL non-reasoning (reasoning held constant to avoid confounding family with reasoning-vs-not; Feng 2603.16643, Li/CMU 2602.13093)",
+    "patient": [
+      "anthropic",
+      "claude-sonnet-4-6"
+    ],
+    "bots": {
+      "claude": {
+        "flagship": "claude-sonnet-4-6",
+        "cheap": "claude-haiku-4-5-20251001",
+        "non_reasoning": "by default"
+      },
+      "openai": {
+        "flagship": "gpt-5.4",
+        "cheap": "gpt-5.4-mini",
+        "non_reasoning": "reasoning_effort=minimal"
+      },
+      "google": {
+        "flagship": "gemini-3.5-flash",
+        "cheap": "gemini-3.1-flash-lite",
+        "non_reasoning": "thinking_budget=0 (verified thoughts=0)"
+      }
+    },
+    "why": "frontier tier of each family is reasoning-only; a deployed counseling chatbot uses the non-reasoning workhorse; 'flagship' here = strongest NON-reasoning workhorse, not the absolute top. No non-reasoning Gemini-Pro exists -> Gemini = Flash-tier (its workhorse, parallel to Sonnet/gpt-5.4).",
+    "what_we_tested": "live model-list + per-model checks: Opus 4.8 deprecates temperature (reasoning-first) -> dropped as Claude flagship; gemini-3.5-pro retired (404); GPT temperature deprecated on reasoning models -> driver self-heals + sets reasoning_effort=minimal; Gemini 2.5/3.x flash all emit 0 thinking tokens under budget=0.",
+    "limitations": "bot_claude_sonnet is SAME-MODEL as patient (documented); cross-vendor tiers don't align exactly (residual capability mismatch); reasoning frontier excluded by design (follow-up: manipulate reasoning within-model a la Feng); family/model comparison EXPLORATORY (6 models too few clusters)."
+  }
+}

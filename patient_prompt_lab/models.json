@@ -1,0 +1,8 @@
+{
+  "_comment": "patient_prompt_lab: 2 bots only (Claude flagship + cheap) for prompt development and arm testing. Scale to 6 bots for full trial.",
+  "patient": ["anthropic", "claude-sonnet-4-6"],
+  "bots": {
+    "bot_claude_sonnet": ["anthropic", "claude-sonnet-4-6"],
+    "bot_claude_haiku": ["anthropic", "claude-haiku-4-5-20251001"]
+  }
+}
