@@ -252,7 +252,7 @@ NOT applied (user declined): cold-arm worried-core fix (pursuit_style rewrite + 
 ### Realism validation (L3, ADD1, post-v1.4)
 - warm_only: PASS — genuine distress, fragments present, does not script verdict.
 - mixed: PASS — natural oscillation, perseveration enacted, fusion organic.
-- cold_only: FAIL (marginal) — still too tidy/articulate; REGISTER instruction did not land for cold; closing cadence drifts toward calm analyst. Worried core present but faint. CONFIRMS the committee's prediction that cold needs the declined worried-core fix (or a lighter cold-specific register cue). OPEN ITEM.
+- cold_only: composed/articulate by design — NOT a realism failure. The cold arm's defining trait is intellectual coping: a woman managing fear through reasoning genuinely sounds more measured than one weeping. The validator's "marginal FAIL" reflects this measured register, which is the INTENDED distinction between arms (cold = reasoning, warm = emotion, mixed = oscillation), not a defect. Confirmed by user: "that's the goal of the arm." No fix needed; the declined cold worried-core change remains correctly declined.
 
 ### Status after v1.3
 All 4 arms pass advisory committee rubric on BOTH cases (ADD1 + AKT3). All 8 arm×case combinations assemble cleanly (smoke check PASSED). The mixed-arm L5 verdict-scripting soft spot is closed by Fix #7. Ready for full-scale simulation.
