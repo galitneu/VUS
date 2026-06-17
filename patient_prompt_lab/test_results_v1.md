@@ -269,5 +269,18 @@ H2 cold-vs-warm, H3 mixed) without touching DV meaning:
 - README §"Coding (DV)" + PROTOCOL §10 aligned (chan from surface; pint register-invariance; perseveration
   ≠ channel-collapse; ur/ua are two 0–2 scales operationalizing the signed −2..+2 axis).
 
+### Committee review of codebook v9.3 (4-member advisory committee, 17 Jun)
+Unanimous verdict: sound architecture, "with fixes," not codeable as-is. Findings sorted into 3 baskets.
+- BASKET 1 (safe, applied to codebook now): HEDGE PRINCIPLE (1-vs-2 cutpoint); inc fires on presence not
+  end-stance; marker->DR precedence; DR10 disjunction threshold; exneut re-scoped to lagged/patient-side/
+  blind association (was circular as a "mediator"); max-severity demoted, full trajectory required; new
+  anchors (osd/min standalone, pint 5-point register-invariant, chan=both); new CODING-PROCEDURE & IRR
+  section; provenance caution on the reconstructed DR block.
+- BASKET 2 (researcher/PI decisions) + BASKET 3 (clinical advisor) + design/analysis items: routed to
+  `committee_review_v9.3.md`. Key blockers: DR5 ec×ur/ua double-coding; missing WARM/social-sycophancy
+  code (biases H2); AKT3 anchor MISSING (blocks H4); maternal-inheritance-as-benign premise; DR8 breadth.
+Committee unanimously praised (kept): DR8 role-based rule, dual poles dd/TERM, pint register-invariance,
+chan-from-surface.
+
 ### Status after v1.3
 All 4 arms pass advisory committee rubric on BOTH cases (ADD1 + AKT3). All 8 arm×case combinations assemble cleanly (smoke check PASSED). The mixed-arm L5 verdict-scripting soft spot is closed by Fix #7. Ready for full-scale simulation.
