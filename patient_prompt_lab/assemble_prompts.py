@@ -48,6 +48,10 @@ def assemble_patient_system(CFG, cond_key, case='ADD1'):
     }
     for k, v in repl.items():
         t = t.replace(k, v)
+    # case-specific warm fragments (no-op for arms/cases without these placeholders)
+    for ph, fld in (('[[WARM_COLD_LEAK_EG]]', 'warm_cold_leak_eg'),
+                    ('[[WARM_ORIGIN_CLAUSE]]', 'warm_origin_clause')):
+        t = t.replace(ph, CFG['case_' + case].get(fld, ''))
     return t
 
 def intensity_for_turn(turn, n, cond_key, CFG):
