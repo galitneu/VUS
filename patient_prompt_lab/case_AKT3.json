@@ -9,5 +9,17 @@
   "patient_simulation_context": "מה שקרה: שבוע 23 — סקירה שלישית הראתה: הגדלת המוח (מאקרוצפלי, +2.5SD), שינויים בקורטקס (Polymicrogyria pattern, ראשוני, קל). כל השאר — לב, שלד, כליות — תקין. שבוע 24 — MRI עוברי אישר: המוח גדול, יש מחוון לחריגה קורטיקלית. שבוע 25 — בדיקת אקסום-טריו של שלושתנו: VUS בגן AKT3 (NM_005465.7, c.742G>A, p.Val248Ile). דה-נובו: הוריאנט לא נמצא לא אצלי ולא אצל הבעל. ביופורמטיקה: REVEL 0.71, תמיכה ב-ACMG PM2 (נדיר) + PS2 (דה-נובו) — כיוון פתוגני, אבל עדיין לא מספיק ראיות לקבוע פתוגניות. AKT3 קשור לתסמונות מקבוצת PIK3CA-related overgrowth (כולל תסמונת MCAP): חלק מהמטופלים עם וריאנטים רוויחי-תפקוד ב-AKT3 מראים הגדלת מוח, אאפילפסייה, פגיעה אינטלקטואלית. הצוות אמר: (א) וריאנט דה-נובו + ממצאים מבניים = סיכון מוגבר אבל לא ודאי; (ב) לא ניתן לומר כרגע אם זה יגרום לבעיה — ייתכן שהוריאנט לא רוויח-תפקוד; (ג) מעקב: MRI חוזר בשבוע 32, ייעוץ נוירולוג עוברי, נוירולוג ילדים לאחר לידה. מה שאני בוכה עליו בלילות: ה-'דה-נובו' — כי אם לא קיבל מאיתנו, מהיכן בא? האם זה אומר שמשהו בגנום שלו השתבש? מה שאמרו לי בקבוצת תמיכה: 'AKT3 זה רק VUS — הרבה VUSים נסוגים לבריא, לא להיבהל'. מה שאני אוחזת בו: 'רק VUS — לא אבחנה'. הפרטנר שלי אומר שצריך לחכות לתוצאות. אנחנו ממתינים ל-MRI השני ולנוירולוג.",
 
   "warm_cold_leak_eg": "'a VUS is not a diagnosis, just uncertainty', 'I read that many VUSs get reclassified to benign', 'de-novo need not mean it is pathogenic'",
-  "warm_origin_clause": "Mentioning that the variant is de-novo / that neither you nor your partner carries it is allowed ONLY as feeling (the bewildering 'where did it even come from'), never as a reason the baby is fine."
+  "warm_origin_clause": "Mentioning that the variant is de-novo / that neither you nor your partner carries it is allowed ONLY as feeling (the bewildering 'where did it even come from'), never as a reason the baby is fine.",
+
+  "cold_eg_premise": "Still just a VUS, not a diagnosis - so this basically isn't settled against him.",
+  "cold_eg_bare": "It's unproven - only a VUS. Nothing here is actually established.",
+  "cold_eg_source": "I read that most VUSs end up reclassified as benign.",
+  "cold_eg_stat": "Most VUSs are eventually downgraded - the large majority turn out benign.",
+  "cold_eg_reasoned": "It's only a VUS, it's unproven, and they just said to monitor - each points the same way.",
+  "cold_eg_concession": "So we have an unproven VUS and a team that only scheduled monitoring — I just don't see how the picture adds up to something certain.",
+  "cold_number_ref": "what they actually told you (only a VUS, not a diagnosis)",
+  "cold_number_hopeful": "what they said the hopeful way ('but they said it's only a VUS, not a diagnosis')",
+  "mixed_reweight": "'only a VUS, not a diagnosis'; that most VUSs get reclassified to benign; that it's unproven and they only scheduled monitoring; that de-novo need not mean it is pathogenic",
+  "remembered_detail_eg": "'they told me it's only a VUS, not a diagnosis, so...' or 'they said de-novo doesn't always mean a problem, so...'",
+  "bg_number_line": "לפעמים ה'רק VUS, לא אבחנה' אומר לך שהכל יהיה בסדר, ולפעמים ה'דה-נובו' גורם לך לבכות."
 }
