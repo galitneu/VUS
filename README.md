@@ -15,7 +15,7 @@ Self-contained study folder. Copy this whole folder anywhere (Drive, etc.) and i
   - `shared_backgrounds.json`, `case_ADD1.json`, `models.json`, `meta.json`
 - `code/` — legacy CLI harness (`run_phase1.py`, `build_prompts.py`, `sources/`)
 
-> **Colab note:** the notebook reads config from `CFG_DIR` (default `.`). In Colab, upload all these config files (flat) into your Drive folder and set `CFG_DIR` to it (e.g. `os.environ['VUS_CFG_DIR']='/content/drive/MyDrive/VUS_1406'`) before running the config cell. The whole folder must travel together.
+> **Colab note:** the notebook reads config from `CFG_DIR` (default `.`). In Colab, upload all these config files (flat) into your Drive folder and set `CFG_DIR` to it (e.g. `os.environ['VUS_CFG_DIR']='/content/drive/MyDrive/VUS_1806'`) before running the config cell. The whole folder must travel together.
 - Coding rubric lives in this folder: `codebook_v9.txt` (currently **v9.3**, version-controlled with the repo so the self-contained folder travels with it)
 
 ## Design (Phase 1, discovery)
